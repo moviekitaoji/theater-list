@@ -3,16 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>台灣特殊影廳、4K影廳列表</title>
+    <title>台灣特殊影廳列表</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Noto+Sans+TC:wght@500;900&display=swap');
         body { background-color: #0b0e14; color: #e6edf3; font-family: 'Inter', 'Noto Sans TC', sans-serif; }
+        
+        /* 標籤樣式 */
         .status-badge { width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 900; flex-shrink: 0; border-radius: 50%; }
         .badge-4k { background-color: #ffd700; color: #000; box-shadow: 0 0 10px rgba(255, 215, 0, 0.4); }
         .badge-large { background-color: #484f58; color: #ffffff; font-size: 11px; }
         .ratio-tag { font-weight: 800; font-size: 11px; min-width: 32px; text-align: center; }
-        .category-card { border: 3px solid; background: #161b22; border-radius: 14px; padding: 20px; height: fit-content; box-shadow: 0 8px 20px rgba(0,0,0,0.4); }
+
+        /* 卡片設計 */
+        .category-card { border: 3px solid; background: #161b22; border-radius: 14px; padding: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.4); }
         .filter-checkbox { accent-color: #238636; width: 18px; height: 18px; cursor: pointer; }
     </style>
 </head>
@@ -31,15 +35,15 @@
     <div id="container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 items-start"></div>
 
     <footer class="mt-16 border-t border-[#30363d] pt-10 text-sm text-gray-500">
-        <div id="ratio-legend" class="flex flex-wrap gap-3 mb-8"></div>
-        <div class="bg-[#161b22] p-6 rounded-lg border border-[#30363d] opacity-90 text-xs leading-relaxed max-w-4xl mx-auto">
+        <div id="ratio-legend" class="flex flex-wrap justify-center gap-1 mb-8"></div>
+        <div class="text-center opacity-70 text-[11px]">
             <p>※ 資料來源：電影北大路 Movie Kitaoji。最後更新：2025/12/25</p>
         </div>
     </footer>
 
     <script>
         let rawData = null;
-        const sortOrder = ["IMAX 系列", "DOLBY 系列", "CJ 4DPLEX 系列", "數位 4K 影廳", "MEDIA MATION 系列", "D-BOX 系列"];
+        const sortOrder = ["IMAX 系列", "DOLBY 系列", "CJ 4DPLEX 系列", "數位 4K 影廳", "動態座椅系列"];
 
         async function init() {
             try {
@@ -48,7 +52,7 @@
                 renderLegend();
                 updateView();
             } catch (e) {
-                document.getElementById('container').innerHTML = `<p class="text-red-500 col-span-full text-center font-bold">讀取 theaters.json 失敗，請確認檔案路徑與格式。</p>`;
+                document.getElementById('container').innerHTML = `<p class="text-red-500 col-span-full text-center">請透過伺服器環境(如 Live Server)開啟以讀取 JSON 資料。</p>`;
             }
         }
 
@@ -56,7 +60,11 @@
             const legend = document.getElementById('ratio-legend');
             legend.innerHTML = '';
             rawData.ratios.forEach(r => {
-                legend.innerHTML += `<span class="bg-[#1c2128] px-3 py-1.5 rounded-md text-[11px] border border-[#30363d] font-mono"><b class="text-blue-400 mr-2">${r.label}</b> ${r.desc}</span>`;
+                // px-1.5 py-0.5: 讓標籤更緊湊，與 4K 圖示一致
+                legend.innerHTML += `
+                    <span class="bg-[#1c2128] px-1.5 py-0.5 rounded-md text-[10px] border border-[#30363d] font-mono">
+                        <b class="text-blue-400 mr-1">${r.label}</b><span class="text-gray-400">${r.desc}</span>
+                    </span>`;
             });
         }
 
@@ -71,13 +79,12 @@
 
             sorted.forEach(cat => {
                 let catBody = '';
-                let totalItems = 0;
+                let total = 0;
 
                 cat.subgroups.forEach(sub => {
                     const items = sub.items.filter(i => (!only4k || i.is4k) && (!onlyLarge || i.isLarge) && (!onlyMotion || i.isMotion));
-                    
                     if (items.length > 0) {
-                        totalItems += items.length;
+                        total += items.length;
                         catBody += `
                             <div class="mt-8 first:mt-0">
                                 <h3 class="text-[10px] uppercase tracking-[0.25em] font-black mb-4 border-l-4 pl-3" style="color: ${sub.color}; border-color: ${sub.color}">${sub.subtitle}</h3>
@@ -102,12 +109,12 @@
                     }
                 });
 
-                if (totalItems > 0) {
+                if (total > 0) {
                     container.innerHTML += `
                         <div class="category-card" style="border-color: ${cat.color}aa">
                             <h2 class="text-xl font-black mb-6 pb-2 border-b-2 flex items-center justify-between" style="border-color: ${cat.color}; color: ${cat.color}">
                                 ${cat.name}
-                                <span class="text-xs bg-gray-800 text-gray-300 px-3 py-0.5 rounded-full font-mono">${totalItems}</span>
+                                <span class="text-xs bg-gray-800 text-gray-300 px-3 py-0.5 rounded-full font-mono">${total}</span>
                             </h2>
                             ${catBody}
                         </div>`;
