@@ -17,18 +17,17 @@
             font-size: 10px; font-weight: 900; flex-shrink: 0;
             border-radius: 50%;
         }
-        /* 4K 圓標：實心黃底 */
         .badge-4k { 
             background-color: #ffd700; color: #000; 
             box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
         }
-        /* 巨大銀幕圓標：實心灰底 */
         .badge-large { 
             background-color: #484f58; color: #ffffff;
             font-size: 11px;
         }
 
-        .ratio-tag { color: #58a6ff; font-weight: 800; font-size: 11px; min-width: 28px; text-align: center; }
+        /* 比例標籤：移除原本的藍色，改為繼承顏色 */
+        .ratio-tag { font-weight: 800; font-size: 11px; min-width: 28px; text-align: center; }
 
         .category-card { 
             border: 1px solid #30363d; background: #161b22; 
@@ -44,7 +43,7 @@
     <header class="flex flex-col xl:flex-row justify-between items-start xl:items-center mb-10 gap-6">
         <div>
             <h1 class="text-2xl md:text-3xl font-bold text-white tracking-tight">台灣特殊影廳列表 <span class="text-gray-500 font-light">| Premium Cinema Guide</span></h1>
-            <p class="text-gray-400 mt-1">實心標籤系統：大 (巨大銀幕) / 4K (投影規格)</p>
+            <p class="text-gray-400 mt-1">顏色統一優化：Theater / Hall / Ratio 同色</p>
         </div>
         
         <div class="bg-[#161b22] border border-[#30363d] p-3 rounded-lg flex flex-wrap gap-6 shadow-2xl">
@@ -63,10 +62,6 @@
 
     <footer class="mt-12 border-t border-[#30363d] pt-8 text-sm text-gray-500">
         <div id="ratio-legend" class="flex flex-wrap gap-3 mb-6"></div>
-        <div class="opacity-60 text-xs space-y-1">
-            <p>※ 資料來源：電影北大路 Movie Kitaoji。最後更新：2025/12/25</p>
-            <p>※ 排版邏輯：左側為影城，右側依序為 <b>影廳 / 比例 / 大 (巨大銀幕) / 4K</b></p>
-        </div>
     </footer>
 
     <script>
@@ -78,7 +73,7 @@
                 rawData = await response.json();
                 renderLegend();
                 updateView();
-            } catch (e) { console.error("資料載入失敗，請確認 theaters.json 格式正確。"); }
+            } catch (e) { console.error("載入失敗", e); }
         }
 
         function renderLegend() {
@@ -112,12 +107,11 @@
                                 <h3 class="text-[10px] uppercase tracking-[0.2em] font-black mb-4 border-l-4 pl-3" style="color: ${sub.color}; border-color: ${sub.color}">
                                     ${sub.subtitle}
                                 </h3>
-                                <ul class="space-y-2">
+                                <ul class="space-y-4">
                                     ${filteredItems.map(item => {
-                                        // 優先使用個別項目顏色，若無則使用分組顏色
                                         const displayColor = item.color || sub.color;
                                         return `
-                                        <li class="flex items-center justify-between text-[13px] group border-b border-gray-800/40 pb-1">
+                                        <li class="flex items-center justify-between text-[13px] group border-b border-gray-800/40 pb-2">
                                             <div class="min-w-0 pr-4">
                                                 <span class="font-bold truncate group-hover:text-white transition-colors" style="color: ${displayColor}ee">
                                                     ${item.theater}
@@ -125,8 +119,9 @@
                                             </div>
                                             
                                             <div class="flex items-center gap-4 flex-shrink-0 ml-auto">
-                                                <span class="text-blue-200 font-medium">${item.hall}</span>
-                                                <span class="ratio-tag">${item.ratio || '-'}</span>
+                                                <span class="font-bold" style="color: ${displayColor}ee">${item.hall}</span>
+                                                
+                                                <span class="ratio-tag" style="color: ${displayColor}dd">${item.ratio || '-'}</span>
                                                 
                                                 <div class="flex items-center gap-1.5 w-[52px] justify-end">
                                                     ${item.isLarge ? '<span class="status-badge badge-large" title="巨大銀幕">大</span>' : '<span class="w-[22px]"></span>'}
@@ -158,4 +153,3 @@
     </script>
 </body>
 </html>
-
