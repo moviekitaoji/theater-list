@@ -6,23 +6,26 @@
     <title>Taiwan Premium Cinema Guide</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background-color: #0d1117; color: #e6edf3; font-family: 'Inter', system-ui, sans-serif; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Noto+Sans+TC:wght@500;900&display=swap');
         
-        /* 統一圓形標籤樣式 (4K 與 巨大銀幕) */
+        body { background-color: #0d1117; color: #e6edf3; font-family: 'Inter', 'Noto Sans TC', sans-serif; }
+        
+        /* 統一圓形標籤樣式 */
         .status-badge { 
             width: 22px; height: 22px; 
             display: inline-flex; align-items: center; justify-content: center; 
-            font-size: 9px; font-weight: 900; flex-shrink: 0;
+            font-size: 10px; font-weight: 900; flex-shrink: 0;
             border-radius: 50%;
         }
+        /* 4K 標籤：實心黃底黑字 */
         .badge-4k { 
             background-color: #ffd700; color: #000; 
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
         }
+        /* 巨大銀幕標籤：實心灰底白字 */
         .badge-large { 
-            background-color: transparent; color: #fff;
-            border: 1.5px solid #fff;
-            font-size: 11px;
+            background-color: #484f58; color: #ffffff;
+            font-size: 11px; /* 「大」字稍微調大一點點比較清晰 */
         }
 
         .ratio-tag { color: #58a6ff; font-weight: 800; font-size: 11px; min-width: 24px; text-align: center; }
@@ -41,7 +44,7 @@
     <header class="flex flex-col xl:flex-row justify-between items-start xl:items-center mb-10 gap-6">
         <div>
             <h1 class="text-2xl md:text-3xl font-bold text-white tracking-tight">台灣特殊影廳列表 <span class="text-gray-500 font-light">| Premium Cinema Guide</span></h1>
-            <p class="text-gray-400 mt-1">佈局優化：標籤統一 / 廳別自定義顏色</p>
+            <p class="text-gray-400 mt-1">佈局優化：實心圓標「大」與「4K」</p>
         </div>
         
         <div class="bg-[#161b22] border border-[#30363d] p-3 rounded-lg flex flex-wrap gap-6 shadow-2xl">
@@ -51,7 +54,7 @@
             </label>
             <label class="flex items-center gap-2 cursor-pointer group">
                 <input type="checkbox" id="filterLarge" class="filter-checkbox" onchange="updateView()">
-                <span class="text-sm font-medium group-hover:text-white transition-colors">僅顯示巨大銀幕 (ⓧ)</span>
+                <span class="text-sm font-medium group-hover:text-white transition-colors">僅顯示巨大銀幕 (大)</span>
             </label>
         </div>
     </header>
@@ -62,7 +65,7 @@
         <div id="ratio-legend" class="flex flex-wrap gap-3 mb-6"></div>
         <div class="opacity-60 text-xs space-y-1">
             <p>※ 資料來源：電影北大路 Movie Kitaoji。最後更新：2025/12/25</p>
-            <p>※ 排版邏輯：左側為影城，右側依序為 <b>影廳 / 比例 / ⓧ巨大銀幕 / 4K</b></p>
+            <p>※ 排版邏輯：左側為影城，右側為 <b>影廳 / 比例 / 大 (巨大銀幕) / 4K</b></p>
         </div>
     </footer>
 
@@ -111,7 +114,6 @@
                                 </h3>
                                 <ul class="space-y-4">
                                     ${filteredItems.map(item => {
-                                        // 優先使用項目顏色，若無則使用子分組顏色
                                         const displayColor = item.color || sub.color;
                                         return `
                                         <li class="flex items-center justify-between text-[13px] group border-b border-gray-800/40 pb-2">
@@ -125,8 +127,8 @@
                                                 <span class="text-blue-200 font-medium">${item.hall}</span>
                                                 <span class="ratio-tag">${item.ratio}</span>
                                                 
-                                                <div class="flex items-center gap-1.5 w-12 justify-end">
-                                                    ${item.isLarge ? '<span class="status-badge badge-large" title="巨大銀幕">ⓧ</span>' : '<span class="w-[22px]"></span>'}
+                                                <div class="flex items-center gap-1.5 w-[50px] justify-end">
+                                                    ${item.isLarge ? '<span class="status-badge badge-large" title="巨大銀幕">大</span>' : '<span class="w-[22px]"></span>'}
                                                     ${item.is4k ? '<span class="status-badge badge-4k">4K</span>' : '<span class="w-[22px]"></span>'}
                                                 </div>
                                             </div>
@@ -143,15 +145,4 @@
                         <div class="category-card">
                             <h2 class="text-base font-bold mb-6 pb-2 border-b-2 flex items-center justify-between" style="border-color: ${cat.color}; color: ${cat.color}">
                                 ${cat.name}
-                                <span class="text-[10px] bg-[#21262d] text-gray-400 px-2 py-0.5 rounded border border-[#30363d]">${totalInCat}</span>
-                            </h2>
-                            ${categoryHtml}
-                        </div>
-                    `;
-                }
-            });
-        }
-        init();
-    </script>
-</body>
-</html>
+                                <span class="text-[10px
