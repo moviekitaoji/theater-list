@@ -10,32 +10,27 @@
         
         body { background-color: #0d1117; color: #e6edf3; font-family: 'Inter', 'Noto Sans TC', sans-serif; }
         
-        /* 統一圓形標籤系統 */
+        /* 標籤樣式 */
         .status-badge { 
             width: 22px; height: 22px; 
             display: inline-flex; align-items: center; justify-content: center; 
-            font-size: 10px; font-weight: 900; flex-shrink: 0;
-            border-radius: 50%;
+            font-size: 10px; font-weight: 900; flex-shrink: 0; border-radius: 50%;
         }
-        .badge-4k { 
-            background-color: #ffd700; color: #000; 
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
-        }
-        .badge-large { 
-            background-color: #484f58; color: #ffffff;
-            font-size: 11px;
-        }
+        .badge-4k { background-color: #ffd700; color: #000; box-shadow: 0 0 10px rgba(255, 215, 0, 0.3); }
+        .badge-large { background-color: #484f58; color: #ffffff; font-size: 11px; }
 
-        /* 比例標籤：移除原本的藍色，改為繼承顏色 */
         .ratio-tag { font-weight: 800; font-size: 11px; min-width: 28px; text-align: center; }
 
+        /* 卡片外框：3px 恆亮 */
         .category-card { 
-            border: 1px solid #30363d; background: #161b22; 
-            border-radius: 12px; padding: 20px; transition: 0.3s; 
+            border: 3px solid; 
+            background: #161b22; 
+            border-radius: 12px; padding: 20px; 
             display: inline-block; width: 100%; 
-            break-inside: avoid-column; margin-bottom: 1.25rem; 
+            break-inside: avoid-column; margin-bottom: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
-        .category-card:hover { border-color: #8b949e; box-shadow: 0 8px 24px rgba(0,0,0,0.5); }
+        
         .filter-checkbox { accent-color: #238636; width: 18px; height: 18px; cursor: pointer; }
     </style>
 </head>
@@ -43,7 +38,7 @@
     <header class="flex flex-col xl:flex-row justify-between items-start xl:items-center mb-10 gap-6">
         <div>
             <h1 class="text-2xl md:text-3xl font-bold text-white tracking-tight">台灣特殊影廳列表 <span class="text-gray-500 font-light">| Premium Cinema Guide</span></h1>
-            <p class="text-gray-400 mt-1">顏色統一優化：Theater / Hall / Ratio 同色</p>
+            <p class="text-gray-400 mt-1">佈局優化：Theater / Hall / Ratio 同色</p>
         </div>
         
         <div class="bg-[#161b22] border border-[#30363d] p-3 rounded-lg flex flex-wrap gap-6 shadow-2xl">
@@ -55,6 +50,10 @@
                 <input type="checkbox" id="filterLarge" class="filter-checkbox" onchange="updateView()">
                 <span class="text-sm font-medium group-hover:text-white transition-colors">僅顯示巨大銀幕 (大)</span>
             </label>
+            <label class="flex items-center gap-2 cursor-pointer group">
+                <input type="checkbox" id="filterMotion" class="filter-checkbox" onchange="updateView()">
+                <span class="text-sm font-medium group-hover:text-white transition-colors">動態座椅</span>
+            </label>
         </div>
     </header>
 
@@ -62,10 +61,16 @@
 
     <footer class="mt-12 border-t border-[#30363d] pt-8 text-sm text-gray-500">
         <div id="ratio-legend" class="flex flex-wrap gap-3 mb-6"></div>
+        <div class="opacity-60 text-xs space-y-1">
+            <p>※ 資料來源：電影北大路 Movie Kitaoji。最後更新：2025/12/25</p>
+            <p>※ 排版邏輯：左側為影城，右側依序為 <b>影廳 / 比例 / 大 (巨大銀幕) / 4K</b></p>
+        </div>
     </footer>
 
     <script>
         let rawData = null;
+        // 指定卡片排序順序
+        const sortOrder = ["IMAX 系列", "DOLBY 系列", "CJ 4DPLEX 系列", "數位 4K 影廳", "MEDIA MATION 系列", "D-BOX 系列"];
 
         async function init() {
             try {
@@ -87,9 +92,19 @@
             const container = document.getElementById('container');
             const only4k = document.getElementById('filter4k').checked;
             const onlyLarge = document.getElementById('filterLarge').checked;
+            const onlyMotion = document.getElementById('filterMotion').checked;
             container.innerHTML = ''; 
 
-            rawData.categories.forEach(cat => {
+            // 排序邏輯
+            const sortedCategories = [...rawData.categories].sort((a, b) => {
+                let indexA = sortOrder.indexOf(a.name);
+                let indexB = sortOrder.indexOf(b.name);
+                if (indexA === -1) indexA = 99;
+                if (indexB === -1) indexB = 99;
+                return indexA - indexB;
+            });
+
+            sortedCategories.forEach(cat => {
                 let categoryHtml = '';
                 let totalInCat = 0;
 
@@ -97,6 +112,7 @@
                     const filteredItems = sub.items.filter(item => {
                         if (only4k && !item.is4k) return false;
                         if (onlyLarge && !item.isLarge) return false;
+                        if (onlyMotion && !item.isMotion) return false;
                         return true;
                     });
 
@@ -117,39 +133,3 @@
                                                     ${item.theater}
                                                 </span>
                                             </div>
-                                            
-                                            <div class="flex items-center gap-4 flex-shrink-0 ml-auto">
-                                                <span class="font-bold" style="color: ${displayColor}ee">${item.hall}</span>
-                                                
-                                                <span class="ratio-tag" style="color: ${displayColor}dd">${item.ratio || '-'}</span>
-                                                
-                                                <div class="flex items-center gap-1.5 w-[52px] justify-end">
-                                                    ${item.isLarge ? '<span class="status-badge badge-large" title="巨大銀幕">大</span>' : '<span class="w-[22px]"></span>'}
-                                                    ${item.is4k ? '<span class="status-badge badge-4k">4K</span>' : '<span class="w-[22px]"></span>'}
-                                                </div>
-                                            </div>
-                                        </li>
-                                    `}).join('')}
-                                </ul>
-                            </div>
-                        `;
-                    }
-                });
-
-                if (totalInCat > 0) {
-                    container.innerHTML += `
-                        <div class="category-card">
-                            <h2 class="text-base font-bold mb-6 pb-2 border-b-2 flex items-center justify-between" style="border-color: ${cat.color}; color: ${cat.color}">
-                                ${cat.name}
-                                <span class="text-[10px] bg-[#21262d] text-gray-400 px-2 py-0.5 rounded border border-[#30363d]">${totalInCat}</span>
-                            </h2>
-                            ${categoryHtml}
-                        </div>
-                    `;
-                }
-            });
-        }
-        init();
-    </script>
-</body>
-</html>
