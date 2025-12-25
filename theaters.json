@@ -26,7 +26,7 @@
           ]
         },
         {
-          "subtitle": "IMAX 數位 Xenon",
+          "subtitle": "IMAX 數位 Xenon (1.90:1)",
           "items": [
             {"theater": "美麗華新台茂", "hall": "IMAX I", "is4k": false, "isLarge": true, "ratio": "I"},
             {"theater": "新竹巨城威秀", "hall": "IMAX I", "is4k": false, "isLarge": false, "ratio": "I"},
@@ -47,6 +47,13 @@
             {"theater": "桃園青埔新光", "hall": "杜比影院 F", "is4k": true, "isLarge": true, "ratio": "F"}
           ]
         },
+        {
+          "subtitle": "Dolby Vision + Atmos (DVA)",
+          "items":
+            {"theater": "台北大巨蛋秀泰", "hall": "DVA廳", "is4k": true, "isLarge": false, "ratio": ""},
+            {"theater": "台北大巨蛋秀泰", "hall": "DVA廳", "is4k": true, "isLarge": false, "ratio": ""},
+          ]
+        }
         {
           "subtitle": "Dolby Atmos (全景聲影廳)",
           "items": [
@@ -106,3 +113,4 @@
     {"label": "S=2.35~2.39", "desc": "寬螢幕比例"}
   ]
 }
+
