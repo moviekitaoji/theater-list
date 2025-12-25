@@ -14,7 +14,7 @@
               "is4k": true, 
               "isLarge": true, 
               "ratio": "G",
-              "color": "#ffffff" 
+              "color": "#ffffff"
             }
           ]
         },
@@ -22,7 +22,36 @@
           "subtitle": "IMAX 商業雷射 (1.90:1)",
           "color": "#ffaa00",
           "items": [
-            {"theater": "花蓮威秀", "hall": "IMAX I", "is4k": true, "isLarge": true, "ratio": "I"}
+            {"theater": "花蓮威秀", "hall": "IMAX I", "is4k": true, "isLarge": true, "ratio": "I"},
+            {"theater": "嘉義in89", "hall": "IMAX I", "is4k": true, "isLarge": true, "ratio": "I", "color": "#00f2ff"}
+          ]
+        },
+        {
+          "subtitle": "IMAX 雷射 XT (1.90:1)",
+          "color": "#ffe100",
+          "items": [
+            {"theater": "板橋大遠百威秀", "hall": "IMAX I", "is4k": true, "isLarge": true, "ratio": "I"},
+            {"theater": "高雄大遠百威秀", "hall": "IMAX I", "is4k": true, "isLarge": true, "ratio": "I"}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "杜比 / 特殊影廳",
+      "color": "#00f2ff",
+      "subgroups": [
+        {
+          "subtitle": "Dolby Cinema",
+          "color": "#00f2ff",
+          "items": [
+            {"theater": "桃園青埔新光", "hall": "杜比影院 F", "is4k": true, "isLarge": true, "ratio": "F"}
+          ]
+        },
+        {
+          "subtitle": "ULTRA 4DX / SCREENX",
+          "color": "#ff00ff",
+          "items": [
+            {"theater": "台北大巨蛋秀泰", "hall": "ULTRA 4DX", "is4k": true, "isLarge": false, "ratio": "F"}
           ]
         }
       ]
@@ -31,6 +60,7 @@
   "ratios": [
     {"label": "G=1.43", "desc": "原生巨幕"},
     {"label": "F=1.85", "desc": "全高比例"},
-    {"label": "I=1.9", "desc": "數位比例"}
+    {"label": "I=1.9", "desc": "數位比例"},
+    {"label": "S=2.35~2.39", "desc": "寬螢幕比例"}
   ]
 }
