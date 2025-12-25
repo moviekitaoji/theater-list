@@ -6,7 +6,7 @@
       "subgroups": [
         {
           "subtitle": "IMAX GT 3D 雷射 (1.43:1)",
-          "color": "#E83015",
+          "color": "#CE0000",
           "items": [
             {"theater": "美麗華大直", "hall": "IMAX G", "is4k": true, "isLarge": true, "ratio": "G"}
           ]
@@ -66,4 +66,5 @@
     {"label": "S=2.35~2.39", "desc": "寬螢幕比例"}
   ]
 }
+
 
