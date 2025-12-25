@@ -8,21 +8,21 @@
     <style>
         body { background-color: #0d1117; color: #e6edf3; font-family: 'Segoe UI', system-ui, sans-serif; }
         .badge-4k { background-color: #ffd700; color: #000; border-radius: 4px; padding: 1px 4px; font-size: 10px; font-weight: 900; margin-left: 6px; }
-        .badge-large { border: 1.5px solid #fff; border-radius: 50%; width: 18px; height: 18px; display: inline-flex; align-items: center; justify-content: center; font-size: 10px; margin-right: 6px; }
-        .ratio-tag { color: #58a6ff; font-weight: bold; margin-left: auto; font-size: 12px; }
-        .category-card { border: 1px solid #30363d; background: #161b22; border-radius: 12px; padding: 20px; transition: 0.3s; }
+        .badge-large { border: 1.5px solid #fff; border-radius: 50%; width: 18px; height: 18px; display: inline-flex; align-items: center; justify-content: center; font-size: 10px; margin-right: 6px; flex-shrink: 0; }
+        .ratio-tag { color: #58a6ff; font-weight: bold; margin-left: auto; font-size: 11px; padding-left: 8px; }
+        .category-card { border: 1px solid #30363d; background: #161b22; border-radius: 12px; padding: 16px; transition: 0.3s; height: fit-content; }
         .category-card:hover { border-color: #8b949e; }
         .filter-checkbox { accent-color: #238636; width: 18px; height: 18px; cursor: pointer; }
     </style>
 </head>
-<body class="p-6 md:p-10">
-    <header class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-6">
+<body class="p-6">
+    <header class="flex flex-col xl:flex-row justify-between items-start xl:items-center mb-8 gap-6">
         <div>
-            <h1 class="text-3xl font-bold text-white tracking-tight">台灣特殊影廳列表 <span class="text-gray-500 font-light">| 4K Cinema Guide</span></h1>
-            <p class="text-gray-400 mt-1">即時篩選與視覺化列表</p>
+            <h1 class="text-2xl md:text-3xl font-bold text-white tracking-tight">台灣特殊影廳列表 <span class="text-gray-500 font-light">| 4K Cinema Guide</span></h1>
+            <p class="text-gray-400 mt-1">Taiwan Premium Cinema Directory (Webified Ver.)</p>
         </div>
         
-        <div class="bg-[#161b22] border border-[#30363d] p-4 rounded-lg flex gap-6">
+        <div class="bg-[#161b22] border border-[#30363d] p-3 rounded-lg flex flex-wrap gap-4">
             <label class="flex items-center gap-2 cursor-pointer">
                 <input type="checkbox" id="filter4k" class="filter-checkbox" onchange="updateView()">
                 <span class="text-sm font-medium">僅顯示 4K 投影</span>
@@ -34,29 +34,35 @@
         </div>
     </header>
 
-    <div id="container" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+    <div id="container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-5">
         </div>
 
     <footer class="mt-16 border-t border-[#30363d] pt-8 text-sm text-gray-500">
-        <div id="ratio-legend" class="flex flex-wrap gap-6 mb-4"></div>
-        <p class="mb-1">※ 資料來源：電影北大路 Movie Kitaoji。最後更新：2025/12/25</p>
-        <p>※ 圖表僅供參考，實際放映規格請以各影城現場公告為準。</p>
+        <div id="ratio-legend" class="flex flex-wrap gap-3 mb-6"></div>
+        <div class="space-y-1 opacity-70">
+            <p>※ 資料來源：電影北大路 Movie Kitaoji。最後更新：2025/12/25</p>
+            <p>※ 圖表僅供參考，實際放映規格請以各影城現場公告為準。</p>
+        </div>
     </footer>
 
     <script>
         let rawData = null;
 
         async function init() {
-            const response = await fetch('theaters.json');
-            rawData = await response.json();
-            renderLegend();
-            updateView();
+            try {
+                const response = await fetch('theaters.json');
+                rawData = await response.json();
+                renderLegend();
+                updateView();
+            } catch (e) {
+                console.error("資料讀取失敗，請確認 theaters.json 檔案是否存在且格式正確。");
+            }
         }
 
         function renderLegend() {
             const legend = document.getElementById('ratio-legend');
             rawData.ratios.forEach(r => {
-                legend.innerHTML += `<span class="bg-[#21262d] px-3 py-1 rounded-full text-xs"><b class="text-blue-400 mr-2">${r.label}</b> ${r.desc}</span>`;
+                legend.innerHTML += `<span class="bg-[#21262d] px-3 py-1 rounded-md text-[11px] border border-[#30363d]"><b class="text-blue-400 mr-2">${r.label}</b> ${r.desc}</span>`;
             });
         }
 
@@ -65,34 +71,34 @@
             const only4k = document.getElementById('filter4k').checked;
             const onlyLarge = document.getElementById('filterLarge').checked;
             
-            container.innerHTML = ''; // 清空內容
+            container.innerHTML = ''; 
 
             rawData.categories.forEach(cat => {
-                // 篩選項目
                 const filteredItems = cat.items.filter(item => {
                     if (only4k && !item.is4k) return false;
                     if (onlyLarge && !item.isLarge) return false;
                     return true;
                 });
 
-                // 如果該分類下有項目才顯示
                 if (filteredItems.length > 0) {
                     let html = `
-                        <div class="category-card animate-in fade-in duration-500">
-                            <h2 class="text-lg font-bold mb-5 pb-2 border-b-2 flex items-center justify-between" style="border-color: ${cat.color}; color: ${cat.color}">
+                        <div class="category-card">
+                            <h2 class="text-base font-bold mb-4 pb-2 border-b-2 flex items-center justify-between" style="border-color: ${cat.color}; color: ${cat.color}">
                                 ${cat.name}
-                                <span class="text-[10px] bg-gray-800 text-gray-400 px-2 py-1 rounded">${filteredItems.length} 廳</span>
+                                <span class="text-[10px] bg-[#21262d] text-gray-400 px-1.5 py-0.5 rounded border border-[#30363d]">${filteredItems.length}</span>
                             </h2>
-                            <ul class="space-y-3">
+                            <ul class="space-y-2.5">
                     `;
                     
                     filteredItems.forEach(item => {
                         html += `
-                            <li class="flex items-center text-sm group">
-                                ${item.isLarge ? '<span class="badge-large" title="巨大銀幕">★</span>' : '<span class="w-6 text-gray-700">⦿</span>'}
-                                <span class="text-gray-300 group-hover:text-white transition-colors">${item.theater}</span>
-                                <span class="ml-2 text-blue-200 opacity-80">${item.hall}</span>
-                                ${item.is4k ? '<span class="badge-4k">4K</span>' : ''}
+                            <li class="flex items-start text-[13px] leading-tight group">
+                                ${item.isLarge ? '<span class="badge-large" title="銀幕寬度19公尺以上">ⓧ</span>' : '<span class="w-6 text-gray-700 flex-shrink-0">⦿</span>'}
+                                <div class="flex flex-wrap items-center flex-grow">
+                                    <span class="text-gray-300 group-hover:text-white transition-colors">${item.theater}</span>
+                                    <span class="ml-1.5 text-blue-300 font-medium">${item.hall}</span>
+                                    ${item.is4k ? '<span class="badge-4k">4K</span>' : ''}
+                                </div>
                                 <span class="ratio-tag">${item.ratio}</span>
                             </li>
                         `;
@@ -103,9 +109,8 @@
                 }
             });
 
-            // 如果篩選後沒結果
             if (container.innerHTML === '') {
-                container.innerHTML = '<div class="col-span-full text-center py-20 text-gray-500">找不到符合條件的影廳，請嘗試放寬篩選條件。</div>';
+                container.innerHTML = '<div class="col-span-full text-center py-20 text-gray-500 bg-[#161b22] rounded-xl border border-dashed border-[#30363d]">找不到符合條件的影廳。</div>';
             }
         }
 
