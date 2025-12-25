@@ -112,12 +112,12 @@
                                 <h3 class="text-[10px] uppercase tracking-[0.2em] font-black mb-4 border-l-4 pl-3" style="color: ${sub.color}; border-color: ${sub.color}">
                                     ${sub.subtitle}
                                 </h3>
-                                <ul class="space-y-4">
+                                <ul class="space-y-2">
                                     ${filteredItems.map(item => {
                                         // 優先使用個別項目顏色，若無則使用分組顏色
                                         const displayColor = item.color || sub.color;
                                         return `
-                                        <li class="flex items-center justify-between text-[13px] group border-b border-gray-800/40 pb-2">
+                                        <li class="flex items-center justify-between text-[13px] group border-b border-gray-800/40 pb-1">
                                             <div class="min-w-0 pr-4">
                                                 <span class="font-bold truncate group-hover:text-white transition-colors" style="color: ${displayColor}ee">
                                                     ${item.theater}
@@ -158,3 +158,4 @@
     </script>
 </body>
 </html>
+
