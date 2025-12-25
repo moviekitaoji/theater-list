@@ -12,8 +12,7 @@
         .badge-4k { background-color: #ffd700; color: #000; box-shadow: 0 0 10px rgba(255, 215, 0, 0.4); }
         .badge-large { background-color: #484f58; color: #ffffff; font-size: 11px; }
         .ratio-tag { font-weight: 800; font-size: 11px; min-width: 32px; text-align: center; }
-        .category-card { border: 3px solid; background: #161b22; border-radius: 14px; padding: 20px; height: fit-content; box-shadow: 0 8px 20px rgba(0,0,0,0.4); transition: transform 0.2s ease; }
-        .category-card:hover { transform: translateY(-4px); }
+        .category-card { border: 3px solid; background: #161b22; border-radius: 14px; padding: 20px; height: fit-content; box-shadow: 0 8px 20px rgba(0,0,0,0.4); }
         .filter-checkbox { accent-color: #238636; width: 18px; height: 18px; cursor: pointer; }
     </style>
 </head>
@@ -22,9 +21,9 @@
         <h1 class="text-3xl md:text-5xl font-black text-white tracking-widest mb-6">台灣特殊影廳、4K影廳列表</h1>
         <div class="flex flex-wrap justify-center gap-4">
             <div class="bg-[#1c2128] border border-[#30363d] p-4 rounded-xl flex flex-wrap gap-8 shadow-xl">
-                <label class="flex items-center gap-2 cursor-pointer group"><input type="checkbox" id="filter4k" class="filter-checkbox" onchange="updateView()"><span class="text-sm font-bold group-hover:text-yellow-400">顯示 4K</span></label>
-                <label class="flex items-center gap-2 cursor-pointer group"><input type="checkbox" id="filterLarge" class="filter-checkbox" onchange="updateView()"><span class="text-sm font-bold group-hover:text-gray-300">巨大銀幕 (大)</span></label>
-                <label class="flex items-center gap-2 cursor-pointer group"><input type="checkbox" id="filterMotion" class="filter-checkbox" onchange="updateView()"><span class="text-sm font-bold group-hover:text-purple-400">動態座椅</span></label>
+                <label class="flex items-center gap-2 cursor-pointer group"><input type="checkbox" id="f4k" class="filter-checkbox" onchange="updateView()"><span class="text-sm font-bold group-hover:text-yellow-400">顯示 4K</span></label>
+                <label class="flex items-center gap-2 cursor-pointer group"><input type="checkbox" id="fL" class="filter-checkbox" onchange="updateView()"><span class="text-sm font-bold group-hover:text-gray-300">巨大銀幕 (大)</span></label>
+                <label class="flex items-center gap-2 cursor-pointer group"><input type="checkbox" id="fM" class="filter-checkbox" onchange="updateView()"><span class="text-sm font-bold group-hover:text-purple-400">動態座椅</span></label>
             </div>
         </div>
     </header>
@@ -34,8 +33,6 @@
     <footer class="mt-16 border-t border-[#30363d] pt-10 text-sm text-gray-500">
         <div id="ratio-legend" class="flex flex-wrap gap-3 mb-8"></div>
         <div class="bg-[#161b22] p-6 rounded-lg border border-[#30363d] opacity-90 text-xs leading-relaxed max-w-4xl mx-auto">
-            <p class="mb-2 text-gray-300 font-bold text-sm">【備註說明】</p>
-            <p>※ 圖表僅供參考，實際影廳資訊請以各影城公佈為準。排版邏輯：左側為影城，右側為影廳/比例/大/4K。</p>
             <p>※ 資料來源：電影北大路 Movie Kitaoji。最後更新：2025/12/25</p>
         </div>
     </footer>
@@ -51,12 +48,13 @@
                 renderLegend();
                 updateView();
             } catch (e) {
-                document.getElementById('container').innerHTML = `<p class="text-red-500 text-center col-span-full">無法載入 theaters.json。請確認檔案是否存在於同一目錄下。</p>`;
+                document.getElementById('container').innerHTML = `<p class="text-red-500 col-span-full text-center font-bold">讀取 theaters.json 失敗，請確認檔案路徑與格式。</p>`;
             }
         }
 
         function renderLegend() {
             const legend = document.getElementById('ratio-legend');
+            legend.innerHTML = '';
             rawData.ratios.forEach(r => {
                 legend.innerHTML += `<span class="bg-[#1c2128] px-3 py-1.5 rounded-md text-[11px] border border-[#30363d] font-mono"><b class="text-blue-400 mr-2">${r.label}</b> ${r.desc}</span>`;
             });
@@ -64,30 +62,55 @@
 
         function updateView() {
             const container = document.getElementById('container');
-            const f4k = document.getElementById('filter4k').checked;
-            const fL = document.getElementById('filterLarge').checked;
-            const fM = document.getElementById('filterMotion').checked;
+            const only4k = document.getElementById('f4k').checked;
+            const onlyLarge = document.getElementById('fL').checked;
+            const onlyMotion = document.getElementById('fM').checked;
             container.innerHTML = ''; 
 
             const sorted = [...rawData.categories].sort((a,b) => sortOrder.indexOf(a.name) - sortOrder.indexOf(b.name));
 
             sorted.forEach(cat => {
-                let catHtml = '';
-                let total = 0;
+                let catBody = '';
+                let totalItems = 0;
+
                 cat.subgroups.forEach(sub => {
-                    const items = sub.items.filter(i => (!f4k || i.is4k) && (!fL || i.isLarge) && (!fM || i.isMotion));
+                    const items = sub.items.filter(i => (!only4k || i.is4k) && (!onlyLarge || i.isLarge) && (!onlyMotion || i.isMotion));
+                    
                     if (items.length > 0) {
-                        total += items.length;
-                        catHtml += `<div class="mt-8 first:mt-0"><h3 class="text-[10px] uppercase tracking-[0.25em] font-black mb-4 border-l-4 pl-3" style="color: ${sub.color}; border-color: ${sub.color}">${sub.subtitle}</h3><ul class="space-y-4">` +
-                            items.map(i => {
-                                const col = i.color || sub.color;
-                                return `<li class="flex items-center justify-between text-[13px] group border-b border-gray-800/40 pb-2"><div class="min-w-0 pr-2"><span class="font-bold truncate" style="color: ${col}ee">${i.theater}</span></div><div class="flex items-center gap-3 flex-shrink-0"><span class="font-bold text-xs" style="color: ${col}dd">${i.hall}</span><span class="ratio-tag" style="color: ${col}bb">${i.ratio || '-'}</span><div class="flex items-center gap-1 w-[50px] justify-end">${i.isLarge ? '<span class="status-badge badge-large">大</span>' : '<span class="w-[22px]"></span>'}${i.is4k ? '<span class="status-badge badge-4k">4K</span>' : '<span class="w-[22px]"></span>'}</div></div></li>`
-                            }).join('') + `</ul></div>`;
+                        totalItems += items.length;
+                        catBody += `
+                            <div class="mt-8 first:mt-0">
+                                <h3 class="text-[10px] uppercase tracking-[0.25em] font-black mb-4 border-l-4 pl-3" style="color: ${sub.color}; border-color: ${sub.color}">${sub.subtitle}</h3>
+                                <ul class="space-y-4">
+                                    ${items.map(i => {
+                                        const col = i.color || sub.color;
+                                        return `
+                                        <li class="flex items-center justify-between text-[13px] border-b border-gray-800/40 pb-2">
+                                            <div class="min-w-0 pr-2"><span class="font-bold truncate" style="color: ${col}ee">${i.theater}</span></div>
+                                            <div class="flex items-center gap-3 flex-shrink-0">
+                                                <span class="font-bold text-xs" style="color: ${col}dd">${i.hall}</span>
+                                                <span class="ratio-tag" style="color: ${col}bb">${i.ratio || '-'}</span>
+                                                <div class="flex items-center gap-1 w-[50px] justify-end">
+                                                    ${i.isLarge ? '<span class="status-badge badge-large">大</span>' : '<span class="w-[22px]"></span>'}
+                                                    ${i.is4k ? '<span class="status-badge badge-4k">4K</span>' : '<span class="w-[22px]"></span>'}
+                                                </div>
+                                            </div>
+                                        </li>`;
+                                    }).join('')}
+                                </ul>
+                            </div>`;
                     }
                 });
 
-                if (total > 0) {
-                    container.innerHTML += `<div class="category-card" style="border-color: ${cat.color}aa"><h2 class="text-xl font-black mb-6 pb-2 border-b-2 flex items-center justify-between" style="border-color: ${cat.color}; color: ${cat.color}">${cat.name}<span class="text-xs bg-gray-800 text-gray-300 px-3 py-0.5 rounded-full font-mono">${total}</span></h2>${catHtml}</div>`;
+                if (totalItems > 0) {
+                    container.innerHTML += `
+                        <div class="category-card" style="border-color: ${cat.color}aa">
+                            <h2 class="text-xl font-black mb-6 pb-2 border-b-2 flex items-center justify-between" style="border-color: ${cat.color}; color: ${cat.color}">
+                                ${cat.name}
+                                <span class="text-xs bg-gray-800 text-gray-300 px-3 py-0.5 rounded-full font-mono">${totalItems}</span>
+                            </h2>
+                            ${catBody}
+                        </div>`;
                 }
             });
         }
