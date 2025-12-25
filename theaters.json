@@ -37,7 +37,7 @@
         ]},
         { "subtitle": "杜比全景聲 Dolby Atmos", "color": "#00ff88", "items": [
           {"theater": "國賓大戲院", "hall": "巨幕廳 F", "is4k": true, "isLarge": true, "ratio": "F", "isMotion": true},
-          {"theater": "西門in89", "hall": "COACH S", "is4k": true, "isLarge": false, "ratio": "S"},
+          {"theater": "西門in89", "hall": "COACH S", "is4k": true, "ratio": "S"},
           {"theater": "林口晴暶國賓", "hall": "2廳 S", "is4k": true, "isMotion": true, "ratio": "S"},
           {"theater": "桃園八德國賓", "hall": "2廳 T", "is4k": true, "isMotion": true, "ratio": "T"},
           {"theater": "台中新時代威秀", "hall": "1廳 F", "is4k": true, "ratio": "F"},
@@ -52,14 +52,15 @@
       "subgroups": [
         { "subtitle": "ULTRA 4DX / 4DX", "color": "#ff00ff", "items": [
           {"theater": "台北大巨蛋秀泰", "hall": "(1)U4DX", "is4k": true, "isMotion": true},
-          {"theater": "台北大巨蛋秀泰", "hall": "(2)U4DX", "is4k": true, "isMotion": true},
           {"theater": "高雄夢時代秀泰", "hall": "U4DX", "is4k": true, "isMotion": true},
           {"theater": "台北信義威秀", "hall": "4DX S", "is4k": false, "isMotion": true, "ratio":"S"},
           {"theater": "林口三井威秀", "hall": "4DX F", "is4k": true, "isMotion": true, "ratio":"F"}
         ]},
-        { "subtitle": "ScreenX", "color": "#ff88ff", "items": [
+        { "subtitle": "ScreenX (三面投影)", "color": "#ff88ff", "items": [
           {"theater": "台北欣欣秀泰", "hall": "SCREENX S", "is4k": true, "isLarge": true, "ratio": "S"},
+          {"theater": "樹林秀泰", "hall": "SCREENX F", "is4k": true, "isLarge": true, "ratio": "F"},
           {"theater": "台中站前秀泰", "hall": "SCREENX F", "is4k": true, "isLarge": true, "ratio": "F"},
+          {"theater": "嘉義秀泰", "hall": "SCREENX F", "is4k": true, "isLarge": true, "ratio": "F"},
           {"theater": "高雄夢時代秀泰", "hall": "SCREENX F", "is4k": true, "isLarge": true, "ratio": "F"}
         ]}
       ]
@@ -72,33 +73,26 @@
           {"theater": "台北松仁威秀", "hall": "泰坦廳 F", "is4k": true, "isLarge": true, "ratio": "F"},
           {"theater": "西門in89", "hall": "LUXE S", "is4k": true, "isLarge": true, "ratio": "S"},
           {"theater": "樂聲影城", "hall": "巨幕廳 U", "is4k": true, "isLarge": true, "ratio": "U"},
+          {"theater": "台中日日新", "hall": "至尊廳 S", "is4k": true, "isLarge": true, "ratio": "S"},
           {"theater": "高雄夢時代秀泰", "hall": "寬巨幕 S", "is4k": true, "isLarge": true, "ratio": "S"}
         ]},
-        { "subtitle": "其他 4K 影廳", "color": "#00ffcc", "items": [
+        { "subtitle": "其他區域 4K", "color": "#00ffcc", "items": [
           {"theater": "桃園青埔新光", "hall": "5-12廳", "is4k": true},
-          {"theater": "台北松仁威秀", "hall": "MUCROWN F", "is4k": true, "ratio": "F"},
           {"theater": "新店裕隆城威秀", "hall": "3 / 8 / 11 廳", "is4k": true, "ratio": "F"},
-          {"theater": "台中中港新光", "hall": "2 / 5 廳", "is4k": true, "ratio": "S"}
+          {"theater": "台中中港新光", "hall": "2 / 5 廳", "is4k": true, "ratio": "S"},
+          {"theater": "台南西門新光", "hall": "2 / 6 廳", "is4k": true, "ratio": "S"}
         ]}
       ]
     },
     {
-      "name": "MEDIA MATION 系列",
+      "name": "動態座椅系列",
       "color": "#ff6600",
       "subgroups": [
-        { "subtitle": "MX4D 動態影廳", "color": "#ff6600", "items": [
+        { "subtitle": "MX4D / D-BOX", "color": "#ff6600", "items": [
           {"theater": "台中中港新光", "hall": "MX4D S", "is4k": true, "isMotion": true, "ratio": "S"},
-          {"theater": "嘉義in89", "hall": "MX4D S", "is4k": false, "isMotion": true, "ratio": "S"}
-        ]}
-      ]
-    },
-    {
-      "name": "D-BOX 系列",
-      "color": "#9d4edd",
-      "subgroups": [
-        { "subtitle": "D-BOX 動態座椅", "color": "#9d4edd", "items": [
-          {"theater": "高雄義大國賓", "hall": "1廳 S", "is4k": false, "isMotion": true, "ratio": "S"},
-          {"theater": "屏東環球國賓", "hall": "1廳 F", "is4k": false, "isMotion": true, "ratio": "F"}
+          {"theater": "嘉義in89", "hall": "MX4D S", "is4k": false, "isMotion": true, "ratio": "S"},
+          {"theater": "高雄義大國賓", "hall": "D-BOX S", "is4k": false, "isMotion": true, "ratio": "S"},
+          {"theater": "屏東環球國賓", "hall": "D-BOX F", "is4k": false, "isMotion": true, "ratio": "F"}
         ]}
       ]
     }
@@ -109,7 +103,7 @@
     {"label": "I=1.9", "desc": "數位比例"},
     {"label": "L=1.95", "desc": "LUXE 比例"},
     {"label": "U=2.0", "desc": "特殊比例"},
-    {"label": "S=2.35~2.39", "desc": "寬螢幕比例"},
-    {"label": "T=2.1~2.2", "desc": "特殊比例"}
+    {"label": "S=2.35", "desc": "寬螢幕"},
+    {"label": "T=2.1", "desc": "杜比比例"}
   ]
 }
