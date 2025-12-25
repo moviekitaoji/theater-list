@@ -133,3 +133,36 @@
                                                     ${item.theater}
                                                 </span>
                                             </div>
+                                            <div class="flex items-center gap-4 flex-shrink-0 ml-auto">
+                                                <span class="font-bold" style="color: ${displayColor}ee">${item.hall}</span>
+                                                <span class="ratio-tag" style="color: ${displayColor}dd">${item.ratio || '-'}</span>
+                                                <div class="flex items-center gap-1.5 w-[52px] justify-end">
+                                                    ${item.isLarge ? '<span class="status-badge badge-large" title="巨大銀幕">大</span>' : '<span class="w-[22px]"></span>'}
+                                                    ${item.is4k ? '<span class="status-badge badge-4k">4K</span>' : '<span class="w-[22px]"></span>'}
+                                                </div>
+                                            </div>
+                                        </li>
+                                    `}).join('')}
+                                </ul>
+                            </div>
+                        `;
+                    }
+                });
+
+                if (totalInCat > 0) {
+                    container.innerHTML += `
+                        <div class="category-card" style="border-color: ${cat.color}aa">
+                            <h2 class="text-base font-bold mb-6 pb-2 border-b-2 flex items-center justify-between" style="border-color: ${cat.color}; color: ${cat.color}">
+                                ${cat.name}
+                                <span class="text-[10px] bg-[#21262d] text-gray-400 px-2 py-0.5 rounded border border-[#30363d]">${totalInCat}</span>
+                            </h2>
+                            ${categoryHtml}
+                        </div>
+                    `;
+                }
+            });
+        }
+        init();
+    </script>
+</body>
+</html>
