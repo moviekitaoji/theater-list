@@ -49,16 +49,15 @@
         },
         {
           "subtitle": "Dolby Vision + Atmos (DVA)",
-          "items":
+          "items": [
             {"theater": "台北大巨蛋秀泰", "hall": "DVA廳", "is4k": true, "isLarge": false, "ratio": ""},
-            {"theater": "台北大巨蛋秀泰", "hall": "DVA廳", "is4k": true, "isLarge": false, "ratio": ""},
+            {"theater": "台北大巨蛋秀泰", "hall": "DVA廳", "is4k": true, "isLarge": false, "ratio": ""}
           ]
-        }
+        },
         {
           "subtitle": "Dolby Atmos (全景聲影廳)",
           "items": [
             {"theater": "國賓大戲院", "hall": "鉅院廳 F", "is4k": true, "isLarge": true, "ratio": "F"},
-            {"theater": "台北大巨蛋秀泰", "hall": "DVA廳", "is4k": true, "isLarge": false, "ratio": ""},
             {"theater": "西門in89", "hall": "COACH廳 S", "is4k": true, "isLarge": false, "ratio": "S"},
             {"theater": "桃園八德國賓", "hall": "2廳 T", "is4k": true, "isLarge": false, "ratio": "T"},
             {"theater": "嘉義in89", "hall": "LUXE廳 L", "is4k": true, "isLarge": true, "ratio": "L"}
@@ -113,4 +112,3 @@
     {"label": "S=2.35~2.39", "desc": "寬螢幕比例"}
   ]
 }
-
