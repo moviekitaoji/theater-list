@@ -8,33 +8,33 @@
     <style>
         body { background-color: #0d1117; color: #e6edf3; font-family: 'Segoe UI', system-ui, sans-serif; }
         .badge-4k { background-color: #ffd700; color: #000; border-radius: 4px; padding: 1px 4px; font-size: 10px; font-weight: 900; margin-left: 6px; }
-        .badge-large { border: 1.5px solid #fff; border-radius: 50%; width: 18px; height: 18px; display: inline-flex; align-items: center; justify-content: center; font-size: 10px; margin-right: 6px; flex-shrink: 0; }
-        .ratio-tag { color: #58a6ff; font-weight: bold; margin-left: auto; font-size: 11px; padding-left: 8px; }
+        .badge-large { border: 1.5px solid #fff; border-radius: 50%; width: 18px; height: 18px; display: inline-flex; align-items: center; justify-content: center; font-size: 10px; margin-right: 8px; flex-shrink: 0; font-weight: bold; }
+        .ratio-tag { color: #58a6ff; font-weight: bold; margin-left: auto; font-size: 11px; padding-left: 10px; }
         
-        /* 瀑布流關鍵設定 */
+        /* 瀑布流 Masonry 設定 */
         .category-card { 
             border: 1px solid #30363d; 
             background: #161b22; 
             border-radius: 12px; 
-            padding: 16px; 
+            padding: 18px; 
             transition: 0.3s; 
-            display: inline-block; /* 必須設為 inline-block 才能正確在 columns 內排列 */
+            display: inline-block; 
             width: 100%; 
             break-inside: avoid-column; 
-            margin-bottom: 1.25rem; /* 上下間距 (同 gap-5) */
+            margin-bottom: 1.25rem; 
         }
         .category-card:hover { border-color: #8b949e; }
         .filter-checkbox { accent-color: #238636; width: 18px; height: 18px; cursor: pointer; }
     </style>
 </head>
-<body class="p-6">
-    <header class="flex flex-col xl:flex-row justify-between items-start xl:items-center mb-8 gap-6">
+<body class="p-6 md:p-10">
+    <header class="flex flex-col xl:flex-row justify-between items-start xl:items-center mb-10 gap-6">
         <div>
             <h1 class="text-2xl md:text-3xl font-bold text-white tracking-tight">台灣特殊影廳列表 <span class="text-gray-500 font-light">| 4K Cinema Guide</span></h1>
             <p class="text-gray-400 mt-1">Taiwan Premium Cinema Directory (Webified Ver.)</p>
         </div>
         
-        <div class="bg-[#161b22] border border-[#30363d] p-3 rounded-lg flex flex-wrap gap-4 shadow-xl">
+        <div class="bg-[#161b22] border border-[#30363d] p-3 rounded-lg flex flex-wrap gap-5 shadow-2xl">
             <label class="flex items-center gap-2 cursor-pointer">
                 <input type="checkbox" id="filter4k" class="filter-checkbox" onchange="updateView()">
                 <span class="text-sm font-medium">僅顯示 4K 投影</span>
@@ -49,7 +49,7 @@
     <div id="container" class="columns-1 md:columns-2 lg:columns-3 2xl:columns-4 gap-5">
         </div>
 
-    <footer class="mt-8 border-t border-[#30363d] pt-8 text-sm text-gray-500">
+    <footer class="mt-12 border-t border-[#30363d] pt-8 text-sm text-gray-500">
         <div id="ratio-legend" class="flex flex-wrap gap-3 mb-6"></div>
         <div class="space-y-1 opacity-70">
             <p>※ 資料來源：電影北大路 Movie Kitaoji。最後更新：2025/12/25</p>
@@ -62,13 +62,12 @@
 
         async function init() {
             try {
-                // 這裡請確保您的 theaters.json 與 index.html 在同一目錄下
                 const response = await fetch('theaters.json');
                 rawData = await response.json();
                 renderLegend();
                 updateView();
             } catch (e) {
-                console.error("載入失敗：", e);
+                console.error("資料載入失敗：", e);
             }
         }
 
@@ -87,40 +86,57 @@
             container.innerHTML = ''; 
 
             rawData.categories.forEach(cat => {
-                const filteredItems = cat.items.filter(item => {
-                    if (only4k && !item.is4k) return false;
-                    if (onlyLarge && !item.isLarge) return false;
-                    return true;
-                });
+                let categoryHtml = '';
+                let totalCountInCat = 0;
 
-                if (filteredItems.length > 0) {
-                    let html = `
-                        <div class="category-card">
-                            <h2 class="text-base font-bold mb-4 pb-2 border-b-2 flex items-center justify-between" style="border-color: ${cat.color}; color: ${cat.color}">
-                                ${cat.name}
-                                <span class="text-[10px] bg-[#21262d] text-gray-400 px-1.5 py-0.5 rounded border border-[#30363d]">${filteredItems.length}</span>
-                            </h2>
-                            <ul class="space-y-2.5">
-                    `;
-                    
-                    filteredItems.forEach(item => {
-                        html += `
-                            <li class="flex items-start text-[13px] leading-tight group">
-                                ${item.isLarge ? '<span class="badge-large" title="銀幕寬度19公尺以上">ⓧ</span>' : '<span class="w-6 text-gray-700 flex-shrink-0">⦿</span>'}
-                                <div class="flex flex-wrap items-center flex-grow">
-                                    <span class="text-gray-300 group-hover:text-white transition-colors">${item.theater}</span>
-                                    <span class="ml-1.5 text-blue-300 font-medium">${item.hall}</span>
-                                    ${item.is4k ? '<span class="badge-4k">4K</span>' : ''}
-                                </div>
-                                <span class="ratio-tag">${item.ratio}</span>
-                            </li>
-                        `;
+                cat.subgroups.forEach(sub => {
+                    const filteredItems = sub.items.filter(item => {
+                        if (only4k && !item.is4k) return false;
+                        if (onlyLarge && !item.isLarge) return false;
+                        return true;
                     });
 
-                    html += `</ul></div>`;
-                    container.innerHTML += html;
+                    if (filteredItems.length > 0) {
+                        totalCountInCat += filteredItems.length;
+                        categoryHtml += `
+                            <div class="mt-5 first:mt-0">
+                                <h3 class="text-[10px] uppercase tracking-[0.1em] text-gray-500 font-black mb-3 border-l-2 pl-2" style="border-color: ${cat.color}aa">
+                                    ${sub.subtitle}
+                                </h3>
+                                <ul class="space-y-3">
+                                    ${filteredItems.map(item => `
+                                        <li class="flex items-start text-[13px] leading-tight group">
+                                            ${item.isLarge ? '<span class="badge-large" title="巨大銀幕">ⓧ</span>' : '<span class="w-[26px] text-gray-700 flex-shrink-0 text-center">⦿</span>'}
+                                            <div class="flex flex-wrap items-center flex-grow">
+                                                <span class="text-gray-300 group-hover:text-white transition-colors">${item.theater}</span>
+                                                <span class="ml-1.5 text-blue-300/80 font-medium">${item.hall}</span>
+                                                ${item.is4k ? '<span class="badge-4k">4K</span>' : ''}
+                                            </div>
+                                            <span class="ratio-tag">${item.ratio}</span>
+                                        </li>
+                                    `).join('')}
+                                </ul>
+                            </div>
+                        `;
+                    }
+                });
+
+                if (totalCountInCat > 0) {
+                    container.innerHTML += `
+                        <div class="category-card">
+                            <h2 class="text-base font-bold mb-5 pb-2 border-b-2 flex items-center justify-between" style="border-color: ${cat.color}; color: ${cat.color}">
+                                ${cat.name}
+                                <span class="text-[10px] bg-[#21262d] text-gray-400 px-1.5 py-0.5 rounded border border-[#30363d]">${totalCountInCat}</span>
+                            </h2>
+                            ${categoryHtml}
+                        </div>
+                    `;
                 }
             });
+
+            if (container.innerHTML === '') {
+                container.innerHTML = '<div class="col-span-full text-center py-20 text-gray-500 bg-[#161b22] rounded-xl border border-dashed border-[#30363d]">找不到符合條件的影廳。</div>';
+            }
         }
 
         init();
