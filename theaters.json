@@ -5,13 +5,13 @@
       "color": "#ffdd00",
       "subgroups": [
         { "subtitle": "IMAX GT 3D 雷射 (1.43:1)", "color": "#ffdd00", "items": [
-          {"theater": "美麗華大直", "hall": "IMAX G", "is4k": true, "isLarge": true, "ratio": "G", "color": "#ffffff"}
+          {"theater": "美麗華大直", "hall": "IMAX G", "is4k": true, "isLarge": true, "ratio": "G"}
         ]},
         { "subtitle": "IMAX 商業雷射 (1.90:1)", "color": "#ffaa00", "items": [
           {"theater": "花蓮威秀", "hall": "IMAX I", "is4k": true, "isLarge": true, "ratio": "I"},
           {"theater": "嘉義in89", "hall": "IMAX I", "is4k": true, "isLarge": true, "ratio": "I"}
         ]},
-        { "subtitle": "IMAX 雷射 XT", "color": "#ffe100", "items": [
+        { "subtitle": "IMAX 雷射 XT (1.90:1)", "color": "#ffe100", "items": [
           {"theater": "板橋大遠百威秀", "hall": "IMAX I", "is4k": true, "isLarge": true, "ratio": "I"},
           {"theater": "新店裕隆城威秀", "hall": "IMAX I", "is4k": true, "isLarge": true, "ratio": "I"},
           {"theater": "高雄大遠百威秀", "hall": "IMAX I", "is4k": true, "isLarge": true, "ratio": "I"},
@@ -29,21 +29,20 @@
       "color": "#00f2ff",
       "subgroups": [
         { "subtitle": "杜比影院 Dolby Cinema", "color": "#00f2ff", "items": [
-          {"theater": "美麗華大直", "hall": "杜比影院 T", "is4k": true, "isLarge": false, "ratio": "T", "color": "#ff3333"},
+          {"theater": "美麗華大直", "hall": "杜比影院 T", "is4k": true, "isLarge": false, "ratio": "T"},
           {"theater": "桃園青埔新光", "hall": "杜比影院 F", "is4k": true, "isLarge": true, "ratio": "F"}
         ]},
         { "subtitle": "Dolby Vision + Atmos", "color": "#ff44aa", "items": [
           {"theater": "台北大巨蛋秀泰", "hall": "DVA廳", "is4k": true, "isLarge": false, "ratio": "F"}
         ]},
         { "subtitle": "杜比全景聲 Dolby Atmos", "color": "#00ff88", "items": [
-          {"theater": "國賓大戲院", "hall": "(DBOX)巨幕 F", "is4k": true, "isLarge": true, "ratio": "F", "isMotion": true},
-          {"theater": "西門in89", "hall": "(PC)COACH S", "is4k": true, "isLarge": false, "ratio": "S", "color": "#ffaa00"},
-          {"theater": "林口晴暶國賓", "hall": "(DBOX)2廳 S", "is4k": true, "isMotion": true, "ratio": "S"},
-          {"theater": "桃園八德國賓", "hall": "(DBOX)2廳 T", "is4k": true, "isMotion": true, "ratio": "T"},
-          {"theater": "宜蘭新月影城", "hall": "1廳 S", "is4k": false, "ratio": "S"},
-          {"theater": "台中中港新光", "hall": "(L)LUXE S", "is4k": true, "ratio": "S"},
-          {"theater": "彰化員林影城", "hall": "A廳 F", "is4k": false, "ratio": "F"},
-          {"theater": "高雄草衙道國賓", "hall": "(DBOX)10廳 F", "is4k": true, "isMotion": true, "ratio": "F"}
+          {"theater": "國賓大戲院", "hall": "巨幕廳 F", "is4k": true, "isLarge": true, "ratio": "F", "isMotion": true},
+          {"theater": "西門in89", "hall": "COACH S", "is4k": true, "isLarge": false, "ratio": "S"},
+          {"theater": "林口晴暶國賓", "hall": "2廳 S", "is4k": true, "isMotion": true, "ratio": "S"},
+          {"theater": "桃園八德國賓", "hall": "2廳 T", "is4k": true, "isMotion": true, "ratio": "T"},
+          {"theater": "台中新時代威秀", "hall": "1廳 F", "is4k": true, "ratio": "F"},
+          {"theater": "台南西門新光", "hall": "LUXE S", "is4k": true, "isLarge": true, "ratio": "S"},
+          {"theater": "高雄草衙道國賓", "hall": "10廳 F", "is4k": true, "isMotion": true, "ratio": "F"}
         ]}
       ]
     },
@@ -51,20 +50,17 @@
       "name": "CJ 4DPLEX 系列",
       "color": "#ff00ff",
       "subgroups": [
-        { "subtitle": "ULTRA 4DX", "color": "#ff00ff", "items": [
-          {"theater": "台北大巨蛋秀泰", "hall": "(1)ULTRA 4DX", "is4k": true, "isMotion": true},
-          {"theater": "台北大巨蛋秀泰", "hall": "(2)ULTRA 4DX", "is4k": true, "isMotion": true},
-          {"theater": "高雄夢時代秀泰", "hall": "ULTRA 4DX", "is4k": true, "isMotion": true}
-        ]},
-        { "subtitle": "ScreenX (三面投影)", "color": "#ff88ff", "items": [
-          {"theater": "台北欣欣秀泰", "hall": "(1)SCREENX S", "is4k": true, "isLarge": true, "ratio": "S"},
-          {"theater": "台中站前秀泰", "hall": "(1)SCREENX F", "is4k": true, "isLarge": true, "ratio": "F"},
-          {"theater": "高雄夢時代秀泰", "hall": "(12)SCREENX F", "is4k": true, "isLarge": true, "ratio": "F"}
-        ]},
-        { "subtitle": "4DX", "color": "#00ccff", "items": [
+        { "subtitle": "ULTRA 4DX / 4DX", "color": "#ff00ff", "items": [
+          {"theater": "台北大巨蛋秀泰", "hall": "(1)U4DX", "is4k": true, "isMotion": true},
+          {"theater": "台北大巨蛋秀泰", "hall": "(2)U4DX", "is4k": true, "isMotion": true},
+          {"theater": "高雄夢時代秀泰", "hall": "U4DX", "is4k": true, "isMotion": true},
           {"theater": "台北信義威秀", "hall": "4DX S", "is4k": false, "isMotion": true, "ratio":"S"},
-          {"theater": "林口三井威秀", "hall": "4DX F", "is4k": true, "isMotion": true, "ratio":"F"},
-          {"theater": "高雄大遠百威秀", "hall": "4DX F", "is4k": false, "isMotion": true, "ratio":"F"}
+          {"theater": "林口三井威秀", "hall": "4DX F", "is4k": true, "isMotion": true, "ratio":"F"}
+        ]},
+        { "subtitle": "ScreenX", "color": "#ff88ff", "items": [
+          {"theater": "台北欣欣秀泰", "hall": "SCREENX S", "is4k": true, "isLarge": true, "ratio": "S"},
+          {"theater": "台中站前秀泰", "hall": "SCREENX F", "is4k": true, "isLarge": true, "ratio": "F"},
+          {"theater": "高雄夢時代秀泰", "hall": "SCREENX F", "is4k": true, "isLarge": true, "ratio": "F"}
         ]}
       ]
     },
@@ -72,24 +68,17 @@
       "name": "數位 4K 影廳",
       "color": "#ffffff",
       "subgroups": [
-        { "subtitle": "北區精選 4K", "color": "#58a6ff", "items": [
+        { "subtitle": "精選 4K 巨幕", "color": "#58a6ff", "items": [
           {"theater": "台北松仁威秀", "hall": "泰坦廳 F", "is4k": true, "isLarge": true, "ratio": "F"},
-          {"theater": "台北松仁威秀", "hall": "(1)MUCROWN F", "is4k": true, "ratio": "F"},
-          {"theater": "南港Lalaport威秀", "hall": "6廳 F", "is4k": true, "ratio": "F"},
-          {"theater": "美麗華大直", "hall": "1 / 2 / 5 廳 S", "is4k": true, "ratio": "S", "color":"#ff3333"},
-          {"theater": "西門in89", "hall": "LUXE S", "is4k": true, "isLarge": true, "ratio": "S", "color":"#ffaa00"},
+          {"theater": "西門in89", "hall": "LUXE S", "is4k": true, "isLarge": true, "ratio": "S"},
           {"theater": "樂聲影城", "hall": "巨幕廳 U", "is4k": true, "isLarge": true, "ratio": "U"},
-          {"theater": "新店裕隆城威秀", "hall": "3 / 8 / 11 廳", "is4k": true, "ratio": "F"}
+          {"theater": "高雄夢時代秀泰", "hall": "寬巨幕 S", "is4k": true, "isLarge": true, "ratio": "S"}
         ]},
-        { "subtitle": "桃竹苗 / 中區 4K", "color": "#00ffcc", "items": [
+        { "subtitle": "其他 4K 影廳", "color": "#00ffcc", "items": [
           {"theater": "桃園青埔新光", "hall": "5-12廳", "is4k": true},
-          {"theater": "桃園光影文化館", "hall": "放映廳 F", "is4k": true, "ratio": "F"},
-          {"theater": "台中中港新光", "hall": "2 / 5 廳", "is4k": true, "ratio": "S"},
-          {"theater": "台中日日新", "hall": "至尊廳 S", "is4k": true, "isLarge": true, "ratio": "S"}
-        ]},
-        { "subtitle": "南區 4K", "color": "#ffaa00", "items": [
-          {"theater": "台南西門新光", "hall": "2 / 6 廳 S", "is4k": true, "isLarge": true, "ratio": "S"},
-          {"theater": "高雄夢時代秀泰", "hall": "(1)寬巨幕 S", "is4k": true, "isLarge": true, "ratio": "S", "color":"#ff44aa"}
+          {"theater": "台北松仁威秀", "hall": "MUCROWN F", "is4k": true, "ratio": "F"},
+          {"theater": "新店裕隆城威秀", "hall": "3 / 8 / 11 廳", "is4k": true, "ratio": "F"},
+          {"theater": "台中中港新光", "hall": "2 / 5 廳", "is4k": true, "ratio": "S"}
         ]}
       ]
     },
@@ -119,7 +108,7 @@
     {"label": "F=1.85", "desc": "全高比例"},
     {"label": "I=1.9", "desc": "數位比例"},
     {"label": "L=1.95", "desc": "LUXE 比例"},
-    {"label": "U=2.0", "desc": "樂聲專屬比例"},
+    {"label": "U=2.0", "desc": "特殊比例"},
     {"label": "S=2.35~2.39", "desc": "寬螢幕比例"},
     {"label": "T=2.1~2.2", "desc": "特殊比例"}
   ]
