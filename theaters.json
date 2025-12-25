@@ -8,50 +8,92 @@
           "subtitle": "IMAX GT 3D 雷射 (1.43:1)",
           "color": "#ffdd00",
           "items": [
-            {
-              "theater": "美麗華大直", 
-              "hall": "IMAX G", 
-              "is4k": true, 
-              "isLarge": true, 
-              "ratio": "G",
-              "color": "#ffffff"
-            }
+            {"theater": "美麗華大直", "hall": "IMAX G", "is4k": true, "isLarge": true, "ratio": "G", "isMotion": false, "color": "#ffffff"}
           ]
         },
         {
           "subtitle": "IMAX 商業雷射 (1.90:1)",
           "color": "#ffaa00",
           "items": [
-            {"theater": "花蓮威秀", "hall": "IMAX I", "is4k": true, "isLarge": true, "ratio": "I"},
-            {"theater": "嘉義in89", "hall": "IMAX I", "is4k": true, "isLarge": true, "ratio": "I", "color": "#00f2ff"}
-          ]
-        },
-        {
-          "subtitle": "IMAX 雷射 XT (1.90:1)",
-          "color": "#ffe100",
-          "items": [
-            {"theater": "板橋大遠百威秀", "hall": "IMAX I", "is4k": true, "isLarge": true, "ratio": "I"},
-            {"theater": "高雄大遠百威秀", "hall": "IMAX I", "is4k": true, "isLarge": true, "ratio": "I"}
+            {"theater": "花蓮威秀", "hall": "IMAX I", "is4k": true, "isLarge": true, "ratio": "I", "isMotion": false},
+            {"theater": "嘉義in89", "hall": "IMAX I", "is4k": true, "isLarge": true, "ratio": "I", "isMotion": false}
           ]
         }
       ]
     },
     {
-      "name": "杜比 / 特殊影廳",
+      "name": "DOLBY 系列",
       "color": "#00f2ff",
       "subgroups": [
         {
           "subtitle": "Dolby Cinema",
           "color": "#00f2ff",
           "items": [
-            {"theater": "桃園青埔新光", "hall": "杜比影院 F", "is4k": true, "isLarge": true, "ratio": "F"}
+            {"theater": "桃園青埔新光", "hall": "杜比影院 F", "is4k": true, "isLarge": true, "ratio": "F", "isMotion": false},
+            {"theater": "台南南紡威秀", "hall": "杜比影院 F", "is4k": true, "isLarge": true, "ratio": "F", "isMotion": false}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "CJ 4DPLEX 系列",
+      "color": "#ff00ff",
+      "subgroups": [
+        {
+          "subtitle": "4DX / ULTRA 4DX",
+          "color": "#ff00ff",
+          "items": [
+            {"theater": "台北信義威秀", "hall": "4DX 廳", "is4k": false, "isLarge": false, "ratio": "S", "isMotion": true},
+            {"theater": "台北大巨蛋秀泰", "hall": "ULTRA 4DX", "is4k": true, "isLarge": false, "ratio": "F", "isMotion": true}
           ]
         },
         {
-          "subtitle": "ULTRA 4DX / SCREENX",
+          "subtitle": "ScreenX",
           "color": "#ff00ff",
           "items": [
-            {"theater": "台北大巨蛋秀泰", "hall": "ULTRA 4DX", "is4k": true, "isLarge": false, "ratio": "F"}
+            {"theater": "台北欣欣秀泰", "hall": "ScreenX", "is4k": false, "isLarge": true, "ratio": "S", "isMotion": false},
+            {"theater": "台中站前秀泰", "hall": "ScreenX", "is4k": false, "isLarge": true, "ratio": "S", "isMotion": false}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "數位 4K 影廳",
+      "color": "#ffffff",
+      "subgroups": [
+        {
+          "subtitle": "精選 4K 巨幕",
+          "color": "#ffffff",
+          "items": [
+            {"theater": "台北松仁威秀", "hall": "泰坦廳 F", "is4k": true, "isLarge": true, "ratio": "F", "isMotion": false},
+            {"theater": "高雄夢時代秀泰", "hall": "寬巨幕廳 S", "is4k": true, "isLarge": true, "ratio": "S", "isMotion": false}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "MEDIA MATION 系列",
+      "color": "#ff6600",
+      "subgroups": [
+        {
+          "subtitle": "MX4D 動態影廳",
+          "color": "#ff6600",
+          "items": [
+            {"theater": "台中新光", "hall": "MX4D 廳", "is4k": true, "isLarge": false, "ratio": "F", "isMotion": true}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "D-BOX 系列",
+      "color": "#9d4edd",
+      "subgroups": [
+        {
+          "subtitle": "D-BOX 動態座椅",
+          "color": "#9d4edd",
+          "items": [
+            {"theater": "台北京站威秀", "hall": "D-BOX 6廳", "is4k": false, "isLarge": false, "ratio": "S", "isMotion": true},
+            {"theater": "板橋大遠百威秀", "hall": "D-BOX 8廳", "is4k": false, "isLarge": false, "ratio": "S", "isMotion": true}
           ]
         }
       ]
@@ -61,6 +103,7 @@
     {"label": "G=1.43", "desc": "原生巨幕"},
     {"label": "F=1.85", "desc": "全高比例"},
     {"label": "I=1.9", "desc": "數位比例"},
+    {"label": "L=1.95", "desc": "LUXE 比例"},
     {"label": "S=2.35~2.39", "desc": "寬螢幕比例"}
   ]
 }
