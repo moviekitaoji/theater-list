@@ -1,0 +1,30 @@
+.social-float {
+	position: fixed;
+	bottom: 30px;
+	right: 30px;
+	display: flex;
+	align-items: center;
+	gap: 15px;
+	background: rgba(22, 27, 34, 0.9);
+	padding: 10px 20px;
+	border-radius: 50px;
+	border: 1px solid #30363d;
+	box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+	z-index: 100;
+}
+.social-float a {
+	color: #e6edf3;
+	font-size: 22px;
+	transition: 0.2s;
+}
+.social-float a:hover { 
+	transform: scale(1.2); 
+	color: #58a6ff; 
+}
+.social-info {
+	border-left: 1px solid #30363d;
+	padding-left: 12px;
+	font-size: 12px;
+	line-height: 1.2;
+	color: #8b949e;
+}

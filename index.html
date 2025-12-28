@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/custom/filter.css" />
+    <link rel="stylesheet" href="css/custom/card.css" />
+    <link rel="stylesheet" href="css/custom/social.css" />
+    <link rel="stylesheet" href="css/custom/special-tag.css" />
+
+    <title>@台灣特殊影廳、4K影廳列表</title>
+  </head>
+
+  <body class="page-body">
+    <header class="page-header">
+      <h1 class="page-title">台灣特殊影廳、4K影廳列表</h1>
+
+      <div class="filter-wrapper">
+        <div class="filter-box">
+          <label class="filter-item">
+            <input
+              type="checkbox"
+              id="filter-checkbox-4k"
+              class="filter-checkbox"
+            />
+            <span class="filter-text" style="--hover-color: #facc15">
+              4K投影設備
+            </span>
+          </label>
+
+          <label class="filter-item">
+            <input
+              type="checkbox"
+              id="filter-checkbox-Large"
+              class="filter-checkbox"
+            />
+            <span class="filter-text" style="--hover-color: #a855f7">
+              大銀幕
+            </span>
+          </label>
+
+          <label class="filter-item">
+            <input
+              type="checkbox"
+              id="filter-checkbox-Move"
+              class="filter-checkbox"
+            />
+            <span class="filter-text" style="--hover-color: #60a5fa">
+              動態座椅
+            </span>
+          </label>
+        </div>
+      </div>
+    </header>
+
+    <main class="page-main">
+      <div id="container" class="grid"></div>
+    </main>
+
+    <footer class="page-footer">
+      <div id="ratio-legend" class="page-footer-ratio-legend"></div>
+
+      <div class="page-footer-note">
+        <p>
+          ※ 排版邏輯：左側為影城，右側依序為影廳/銀幕比例/大銀幕/4K投影設備。
+        </p>
+        <p>
+          ※ 圖表僅供參考，實際影廳資訊請以各影城公佈為準。最後更新：2025/12/25
+        </p>
+      </div>
+    </footer>
+
+    <div class="social-float">
+      <a href="https://www.facebook.com/moviekitaoji" target="_blank"
+        ><i class="fab fa-facebook"></i
+      ></a>
+      <a href="https://www.instagram.com/moviekitaoji" target="_blank"
+        ><i class="fab fa-instagram"></i
+      ></a>
+      <a href="https://www.threads.com/@moviekitaoji" target="_blank"
+        ><i class="fab fa-threads"></i
+      ></a>
+      <div class="social-info">電影北大路<br />Movie Kitaoji</div>
+    </div>
+
+    <script type="module" src="scripts/main.js"></script>
+  </body>
+</html>

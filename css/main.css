@@ -1,0 +1,99 @@
+/* ================fonts================ */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Noto+Sans+TC:wght@500;900&display=swap");
+
+/* ================Html================ */
+html {
+  border: 12px solid #238636;
+  min-height: 100vh;
+}
+
+/* ================Body================ */
+.page-body {
+  padding-bottom: 6rem;
+  background: #0d1117;
+  color: #c9d1d9;
+  font-family: "Inter", "Noto Sans TC", sans-serif;
+  background-color: #0b0e14;
+  color: #e6edf3;
+  margin: 0;
+}
+
+/* ================Header================ */
+.page-header {
+  text-align: center;
+  background-color: #002d53; /* 藍色底 */
+  padding: 40px 20px;
+  margin-bottom: 40px;
+}
+
+.page-title {
+  font-size: 1.875rem; /* text-3xl */
+  font-weight: 900; /* font-black */
+  color: white;
+  letter-spacing: 0.1em;
+  margin: 0px 0px 24px;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .page-title {
+    font-size: 3rem; /* md:text-5xl */
+  }
+}
+
+/* ================Main================ */
+.page-main {
+  padding: 1rem;
+}
+
+@media (min-width: 768px) {
+  .page-main {
+    padding: 2rem;
+  }
+}
+
+/* ================Footer================ */
+.page-footer {
+  margin-top: 4rem;
+  padding: 2rem;
+  border-top: 1px solid #30363d;
+  font-size: 0.875rem;
+  color: #8b949e;
+}
+
+.page-footer-ratio-legend {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+.page-footer-ratio-legend span {
+  background-color: #1c2128;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 11px;
+  border: 1px solid #30363d;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+  display: inline-block;
+}
+.page-footer-ratio-legend span b {
+  color: #60a5fa;
+  margin-right: 8px;
+}
+
+.page-footer-note {
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  max-width: 64rem;
+  margin: auto;
+  line-height: 1.6;
+  color: white;
+}
+
+.page-footer-note p {
+  margin: 0;
+}
