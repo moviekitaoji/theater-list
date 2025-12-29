@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Noto+Sans+TC:wght@500;900&display=swap');
+
+html { border: 12px solid #238636; min-height: 100vh; }
+body { background-color: #0b0e14; color: #e6edf3; font-family: 'Inter', 'Noto Sans TC', sans-serif; margin: 0; }
+
+/* 基礎標籤樣式 */
+.status-badge { width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 900; border-radius: 50%; }
+.badge-4k { background-color: #ffd700; color: #000; box-shadow: 0 0 10px rgba(255, 215, 0, 0.4); }
+.badge-large { background-color: #484f58; color: #ffffff; font-size: 11px; }
+.ratio-tag { font-weight: 680; font-size: 16px; min-width: 4px; text-align: center; }
+
+/* 網格容器主體 */
+#container {
+    display: grid;
+    gap: 1.5rem;
+    align-items: start;
+    width: 100%;
+    max-width: 100%; /* 確保不會超出螢幕範圍 */
+}
+
+/* --- 階段一：超寬螢幕 (1920px 以上) --- */
+@media (min-width: 1440px) {
+    #container { 
+        grid-template-columns: 2fr 1fr 1fr; /* 寬度 2:1:1 */
+    }
+    .flow-column-2 { 
+        column-count: 2; 
+        column-gap: 2.5rem; 
+    }
+}
+
+/* --- 階段二：一般電腦與平板 (768px ~ 1919px) --- */
+@media (min-width: 768px) and (max-width: 1439px) {
+    #container { 
+        grid-template-columns: 1fr 1fr 1fr; /* 三排等寬 1:1:1 */
+    }
+    .flow-column-2 { 
+        column-count: 1; /* 4K 內部轉為單排 */
+    }
+}
+
+/* 電腦版 (>=768px) 維持垂直欄位銜接 */
+@media (min-width: 768px) {
+    .column-group {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        width: 100%;
+    }
+}
+
+/* --- 階段三：手機版 (767px 以下) --- */
+@media (max-width: 767px) {
+    #container { 
+        grid-template-columns: 1fr; /* 強制單格網格 */
+        display: grid; 
+    }
+    .column-group { 
+        display: contents; /* 讓內部卡片能參與 order 排序 */
+    }
+    
+    /* 修正手機版寬度不一的問題 */
+    .category-card {
+        width: 100% !important;
+        box-sizing: border-box; /* 確保邊框不會撐開寬度 */
+    }
+
+    /* 手機版排序 */
+    .card-imax { order: 1; }
+    .card-dolby { order: 2; }
+    .card-cj { order: 3; }
+    .card-media { order: 4; }
+    .card-dbox { order: 5; }
+    .card-4k { order: 6; }
+    
+    .flow-column-2 { column-count: 1; }
+}
+
+/* 卡片設計 */
+.category-card { 
+    border: 3px solid; 
+    background: #161b22; 
+    border-radius: 14px; 
+    padding: 20px; 
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    width: 100%; /* 確保在 Grid 中填滿寬度 */
+}
+
+.subgroup-box { break-inside: avoid; margin-bottom: 1.5rem; }
+.header-blue-bg { background-color: #002d53; padding: 40px 20px; margin-bottom: 40px; }
+.social-float { position: fixed; bottom: 30px; right: 30px; display: flex; align-items: center; gap: 15px; background: rgba(22, 27, 34, 0.9); padding: 10px 20px; border-radius: 50px; border: 1px solid #30363d; z-index: 100; }
+.social-float a { color: #e6edf3; font-size: 22px; transition: 0.2s; }
+.social-info { border-left: 1px solid #30363d; padding-left: 12px; font-size: 12px; color: #8b949e; }
