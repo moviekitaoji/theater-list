@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMAX 系列 - 技術規格詳解</title>
+    <!-- 引入 Tailwind CSS 工具 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 FontAwesome 圖示 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- 引入自定義樣式表 -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="pb-24">
+    <header class="header-blue-bg text-center">
+        <h1 class="text-4xl md:text-6xl font-black text-white tracking-widest mb-6 uppercase">IMAX Series</h1>
+        
+        <!-- [導航選單區塊] 包含 7 個主要頁面連結 -->
+        <nav class="main-nav">
+            <!-- 手機版選單按鈕 -->
+            <button class="mobile-menu-btn md:hidden" onclick="toggleMenu()">
+                <i class="fas fa-bars mr-2"></i>選單導覽
+            </button>
+            <div id="nav-links" class="nav-links hidden md:flex">
+                <a href="index.html" class="nav-btn">影廳清單</a>
+                <a href="spec.html" class="nav-btn">規格指南</a>
+                <a href="imax.html" class="nav-btn active">IMAX 系列</a>
+                <a href="dolby.html" class="nav-btn">DOLBY 系列</a>
+                <a href="cj.html" class="nav-btn">CJ 4DPLEX</a>
+                <a href="media.html" class="nav-btn">MEDIA MATION</a>
+                <a href="dbox.html" class="nav-btn">D-BOX</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 mt-10">
+        <!-- 介紹卡：展示 IMAX DMR 技術與音響系統介紹 -->
+        <div id="imax-intro-box" class="mb-12"></div>
+        
+        <!-- 技術規格區塊：由 JavaScript 根據 imax-data.js 動態產生 -->
+        <div id="imax-main-content" class="space-y-12"></div>
+    </main>
+
+    <!-- 右下角社群按鈕 -->
+    <div class="social-float">
+        <a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook"></i></a>
+        <a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.threads.net/" target="_blank"><i class="fab fa-threads"></i></a>
+        <div class="social-info">電影北大路<br>Movie Kitaoji</div>
+    </div>
+
+    <!-- 腳本引入：先載入資料，再執行渲染邏輯 -->
+    <script src="imax-data.js"></script>
+    <script>
+        /** [功能] 控制手機版選單開關 */
+        function toggleMenu() {
+            const links = document.getElementById('nav-links');
+            links.classList.toggle('hidden');
+            links.classList.toggle('flex');
+        }
+
+        /** [功能] 渲染 IMAX 系列頁面內容 */
+        function renderImax() {
+            const introBox = document.getElementById('imax-intro-box');
+            const mainContent = document.getElementById('imax-main-content');
+            if (typeof imaxSpecData === 'undefined' || typeof imaxIntroData === 'undefined') return;
+
+            // 1. 渲染頂部介紹卡 (實心底色模式)
+            introBox.innerHTML = `
+                <div class="intro-card-cj-solid shadow-2xl" style="background-color: ${imaxIntroData.bgColor}">
+                    <h2 class="font-black text-3xl mb-2" style="color: #ffd700">${imaxIntroData.title}</h2>
+                    <p class="text-white font-bold mb-4 opacity-80">${imaxIntroData.subtitle}</p>
+                    <p class="text-white leading-relaxed text-base">${imaxIntroData.content}</p>
+                </div>`;
+
+            // 2. 渲染各個獨立等級的技術區塊
+            mainContent.innerHTML = imaxSpecData.map(group => {
+                // 產生該類別的影據點 HTML
+                const cinemaHtml = group.cinemas.map(c => `
+                    <div class="imax-cinema-box border-2" style="border-color: ${c.color};">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-xl cinema-name-glow" style="color: ${c.color}">${c.name}</span>
+                            <div class="flex items-center gap-3">
+                                <span class="text-[11px] bg-gray-700 px-2 py-0.5 rounded text-gray-200 font-bold uppercase">${c.sound}</span>
+                                <!-- 修正 3：恢復實心黃圓 4K 標示，無 4K 時佔位 -->
+                                ${c.is4k ? '<span class="status-badge">4K</span>' : '<div class="w-[22px]"></div>'}
+                            </div>
+                        </div>
+                        <div class="text-xs font-mono mt-2 opacity-70" style="color: ${c.color}">銀幕尺寸：${c.size}</div>
+                    </div>`).join('');
+
+                // 產生公式小格子 (實心底色模式)
+                const logicHtml = group.logic.map((l) => `
+                    <div class="logic-block-item ${l.class}">${l.text}</div>
+                `).join('<div class="imax-symbol">+</div>');
+
+                return `
+                <div class="cj-logic-card-wrapper shadow-2xl" style="border-color: ${group.cardColor}">
+                    <!-- 標題區域：底色與邊框顏色統一 -->
+                    <div class="cj-logic-header" style="background-color: ${group.cardColor}">
+                        <h3 class="text-xl font-black text-white">${group.type}</h3>
+                        <span class="text-sm font-bold text-white opacity-80">${group.projector}</span>
+                    </div>
+                    <div class="cj-logic-body">
+                        <!-- 核心容器：桌面垂直置中，手機垂直排列 -->
+                        <div class="flex flex-col lg:flex-row items-center logic-flex-container">
+                            <div class="flex flex-[2] items-center logic-flex-container w-full">
+                                ${logicHtml}
+                            </div>
+                            <!-- 修正 1 & 2：等號置中與 RWD 旋轉 -->
+                            <div class="imax-symbol imax-equal text-white px-4">=</div>
+                            <div class="flex-[1.2] w-full">
+                                ${cinemaHtml}
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+        window.onload = renderImax;
+    </script>
+</body>
+</html>

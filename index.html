@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>台灣特殊影廳、4K影廳列表</title>
+    <!-- 引入 Tailwind CSS 工具 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 FontAwesome 圖示庫 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- 引入自定義樣式表 -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="pb-24"> 
+    <!-- 頂部藍色背景區域：包含標題、導航與篩選器 -->
+    <header class="header-blue-bg">
+        <h1 class="text-3xl md:text-5xl font-black text-white tracking-widest mb-6">台灣特殊影廳、4K影廳列表</h1>
+        
+        <!-- [導航選單區塊] 包含 7 個主要頁面連結 -->
+        <nav class="main-nav mb-8">
+            <!-- 手機版選單按鈕 (只在手機螢幕顯示) -->
+            <button class="mobile-menu-btn md:hidden" onclick="toggleMenu()">
+                <i class="fas fa-bars mr-2"></i>選單導覽
+            </button>
+
+            <!-- 7 個導航按鈕集合 -->
+            <div id="nav-links" class="nav-links hidden md:flex">
+                <a href="index.html" class="nav-btn active">影廳清單</a>
+                <a href="spec.html" class="nav-btn">規格指南</a>
+                <a href="imax.html" class="nav-btn">IMAX 系列</a>
+                <a href="dolby.html" class="nav-btn">DOLBY 系列</a>
+                <a href="cj.html" class="nav-btn">CJ 4DPLEX</a>
+                <a href="media.html" class="nav-btn">MEDIA MATION</a>
+                <a href="dbox.html" class="nav-btn">D-BOX</a>
+            </div>
+        </nav>
+
+        <!-- [篩選器區塊] 使用 Checkbox 進行資料過濾 -->
+        <div class="flex flex-wrap justify-center gap-4">
+            <div class="bg-[#1c2128] border border-[#30363d] p-4 rounded-xl flex flex-wrap gap-x-8 gap-y-4 shadow-xl justify-center">
+                <label class="flex items-center gap-2 cursor-pointer group">
+                    <input type="checkbox" id="f4k" class="filter-checkbox" onchange="updateView()">
+                    <span class="text-sm font-bold group-hover:text-yellow-400">4K投影</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer group">
+                    <input type="checkbox" id="fL" class="filter-checkbox" onchange="updateView()">
+                    <span class="text-sm font-bold group-hover:text-gray-300">大銀幕</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer group">
+                    <input type="checkbox" id="fM" class="filter-checkbox" onchange="updateView()">
+                    <span class="text-sm font-bold group-hover:text-purple-400">動態座椅</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer group">
+                    <input type="checkbox" id="fIMAX" class="filter-checkbox" onchange="updateView()">
+                    <span class="text-sm font-bold group-hover:text-blue-400">IMAX</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer group">
+                    <input type="checkbox" id="fAtmos" class="filter-checkbox" onchange="updateView()">
+                    <span class="text-sm font-bold group-hover:text-cyan-400">Atmos</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer group">
+                    <input type="checkbox" id="fLUXE" class="filter-checkbox" onchange="updateView()">
+                    <span class="text-sm font-bold group-hover:text-orange-400">LUXE</span>
+                </label>
+            </div>
+        </div>
+    </header>
+
+    <!-- [主內容區域] JavaScript 會根據篩選結果將卡片塞入此處 -->
+    <div class="p-4 md:p-8">
+        <div id="container"></div>
+    </div>
+
+    <!-- [頁尾區域] 包含比例說明圖例與更新資訊 -->
+    <footer class="mt-16 border-t border-[#30363d] pt-10 text-sm text-gray-500 p-8">
+        <div id="ratio-legend" class="flex flex-wrap justify-center gap-3 mb-8"></div>
+        <div class="bg-[#161b22] p-6 rounded-lg border border-[#30363d] text-gray-300 text-[14px] leading-relaxed max-w-4xl mx-auto text-center">
+            <p>※ 排版邏輯：左側為影城，右側依序為影廳/銀幕比例/大銀幕/4K投影設備。</p>
+            <p>※ 圖表僅供參考，實際影廳資訊請以各影城公佈為準。最後更新：2025/12/25</p>
+        </div>
+    </footer>
+
+    <!-- [右下角浮動區] 社群連結與品牌資訊 -->
+    <div class="social-float">
+        <a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook"></i></a>
+        <a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.threads.net/" target="_blank"><i class="fab fa-threads"></i></a>
+        <div class="social-info">電影北大路<br>Movie Kitaoji</div>
+    </div>
+
+    <!-- 頁面邏輯腳本 -->
+    <script>
+        /**
+         * [功能] 手機版導航選單的開關邏輯
+         */
+        function toggleMenu() {
+            const links = document.getElementById('nav-links');
+            // 在 hidden (隱藏) 與 flex (顯示) 類別之間切換
+            links.classList.toggle('hidden');
+            links.classList.toggle('flex');
+        }
+    </script>
+    
+    <!-- 引入外部資料檔與主要邏輯檔 -->
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
