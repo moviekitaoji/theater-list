@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dolby Series - 技術規格詳解</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="pb-24">
+    <header class="header-blue-bg text-center">
+        <h1 class="text-4xl md:text-6xl font-black text-white tracking-widest mb-6 uppercase">Dolby Series</h1>
+        <nav class="main-nav">
+            <button class="mobile-menu-btn md:hidden" onclick="toggleMenu()">
+                <i class="fas fa-bars mr-2"></i>選單導覽
+            </button>
+            <div id="nav-links" class="nav-links hidden md:flex">
+                <a href="index.html" class="nav-btn">影廳清單</a>
+                <a href="spec.html" class="nav-btn">規格指南</a>
+                <a href="imax.html" class="nav-btn">IMAX 系列</a>
+                <a href="dolby.html" class="nav-btn active">DOLBY 系列</a>
+                <a href="cj.html" class="nav-btn">CJ 4DPLEX</a>
+                <a href="media.html" class="nav-btn">MEDIA MATION</a>
+                <a href="dbox.html" class="nav-btn">D-BOX</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 mt-10">
+        <!-- 頂部三張實心介紹卡：修正 1 確保圓角 16px -->
+        <div id="dolby-intro-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"></div>
+
+        <!-- 各等級區塊：Dolby Cinema, 簡配廳, Dolby Atmos 群組 -->
+        <div id="dolby-main-content" class="space-y-12"></div>
+    </main>
+
+    <div class="social-float">
+        <a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook"></i></a>
+        <a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.threads.net/" target="_blank"><i class="fab fa-threads"></i></a>
+        <div class="social-info">電影北大路<br>Movie Kitaoji</div>
+    </div>
+
+    <script src="data/dolby-data.js"></script>
+    <script>
+        function toggleMenu() {
+            const links = document.getElementById('nav-links');
+            links.classList.toggle('hidden');
+            links.classList.toggle('flex');
+        }
+
+        /** [功能] 產生杜比據點清單，修正 5 確保邊框明亮 */
+        function createCinemaList(cinemas) {
+            return cinemas.map(c => `
+                <div class="imax-cinema-box border-2 w-full" style="border-color: ${c.color};">
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-xl cinema-name-glow" style="color: ${c.color}">${c.name}</span>
+                        <div class="flex items-center gap-3">
+                            <span class="font-semibold text-lg" style="color: ${c.color}">${c.hall}</span>
+                            ${c.ratio ? `<span class="dolby-ratio-text" style="color: ${c.color}">${c.ratio}</span>` : ''}
+                            ${c.is4k ? '<span class="status-badge">4K</span>' : '<div class="w-[22px]"></div>'}
+                        </div>
+                    </div>
+                </div>`).join('');
+        }
+
+        function renderDolby() {
+            const introContainer = document.getElementById('dolby-intro-container');
+            const mainContent = document.getElementById('dolby-main-content');
+            if (typeof dolbySpecData === 'undefined') return;
+            const data = dolbySpecData[0];
+
+            // 渲染三張介紹卡
+            introContainer.innerHTML = data.intros.map(intro => `
+                <div class="intro-card-dolby-solid shadow-2xl" style="background-color: ${intro.bgColor}">
+                    <h2 class="font-black text-xl mb-3">${intro.title}</h2>
+                    <p class="text-white opacity-90 text-sm leading-relaxed">${intro.desc}</p>
+                </div>`).join('');
+
+            // 渲染格式區塊
+            mainContent.innerHTML = data.groups.map(group => {
+                let innerBody = "";
+                if (group.isAtmosGroup) {
+                    // 處理 Dolby Atmos 合併框
+                    innerBody = group.rows.map(row => {
+                        const logicNames = ["一般影廳", "一般畫面", "杜比全景聲"];
+                        const logicHtml = row.logicClasses.map((lClass, idx) => `
+                            <div class="logic-block-item ${lClass}">${logicNames[idx]}</div>
+                        `).join('<div class="imax-symbol">+</div>');
+
+                        return `
+                        <div class="flex flex-col lg:flex-row items-center logic-flex-container mb-10 last:mb-0">
+                            <div class="flex flex-[0.8] items-center justify-center text-yellow-400 font-bold text-center px-4">${row.subType}</div>
+                            <div class="flex flex-[2] items-center logic-flex-container w-full">${logicHtml}</div>
+                            <div class="imax-symbol imax-equal text-white px-4">=</div>
+                            <div class="flex-[1.2] w-full">${createCinemaList(row.cinemas)}</div>
+                        </div>`;
+                    }).join('');
+                } else {
+                    // 處理 Cinema / 簡配 單排區塊
+                    const logicHtml = group.logic.map((l) => `
+                        <div class="logic-block-item ${l.class}">${l.text}</div>
+                    `).join('<div class="imax-symbol">+</div>');
+
+                    innerBody = `
+                    <div class="flex flex-col lg:flex-row items-center logic-flex-container">
+                        <div class="flex flex-[0.8] items-center justify-center text-yellow-400 font-bold text-center px-4">${group.projector}</div>
+                        <div class="flex flex-[2] items-center logic-flex-container w-full">${logicHtml}</div>
+                        <div class="imax-symbol imax-equal text-white px-4">=</div>
+                        <div class="flex-[1.2] w-full">${createCinemaList(group.cinemas)}</div>
+                    </div>`;
+                }
+
+                return `
+                <div class="cj-logic-card-wrapper shadow-2xl" style="border-color: ${data.introBG}">
+                    <div class="cj-logic-header" style="background-color: ${data.introBG}; border-color: ${data.introBG}">
+                        <h3 class="text-xl font-bold text-white uppercase">${group.type}</h3>
+                    </div>
+                    <div class="cj-logic-body">${innerBody}</div>
+                </div>`;
+            }).join('');
+        }
+        window.onload = renderDolby;
+    </script>
+</body>
+
+</html>

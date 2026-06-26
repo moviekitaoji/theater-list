@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>規格指南 - 台灣影廳規格指南</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- 修正 2：恢復標題藍色區塊 -->
+    <header class="header-blue-bg">
+        <h1 class="text-3xl md:text-5xl font-black text-white tracking-widest mb-6">台灣特殊影廳規格指南</h1>
+        <nav class="main-nav">
+            <button class="mobile-menu-btn md:hidden" onclick="toggleMenu()">
+                <i class="fas fa-bars mr-2"></i>選單導覽
+            </button>
+            <div id="nav-links" class="nav-links hidden md:flex">
+                <a href="index.html" class="nav-btn">影廳清單</a>
+                <a href="spec.html" class="nav-btn active">規格指南</a>
+                <a href="imax.html" class="nav-btn">IMAX 系列</a>
+                <a href="dolby.html" class="nav-btn">DOLBY 系列</a>
+                <a href="cj.html" class="nav-btn">CJ 4DPLEX</a>
+                <a href="media.html" class="nav-btn">MEDIA MATION</a>
+                <a href="dbox.html" class="nav-btn">D-BOX</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="spec-section">
+        <div class="spec-table-wrapper">
+            <table class="spec-table">
+                <thead>
+                    <tr>
+                        <th>品牌</th>
+                        <th>影廳類型</th>
+                        <th>主畫面增幅</th>
+                        <th>影像技術</th>
+                        <th>音響系統</th>
+                        <th>投影解析度</th>
+                        <th>體感座椅</th>
+                        <th>環境特效</th>
+                        <th>影城據點</th>
+                    </tr>
+                </thead>
+                <tbody id="spec-table-body"></tbody>
+            </table>
+        </div>
+        <div id="spec-mobile-list"></div>
+    </main>
+
+    <!-- 右下角社群 -->
+    <div class="social-float">
+        <a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook"></i></a>
+        <a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.threads.net/" target="_blank"><i class="fab fa-threads"></i></a>
+        <div class="social-info">電影北大路<br>Movie Kitaoji</div>
+    </div>
+
+    <script src="data/spec-data.js"></script>
+    <script src="data/spec-script.js"></script>
+    <script>
+        function toggleMenu() {
+            const links = document.getElementById('nav-links');
+            links.classList.toggle('hidden');
+            links.classList.toggle('flex');
+        }
+    </script>
+</body>
+
+</html>
